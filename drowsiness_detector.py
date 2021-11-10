@@ -1,7 +1,6 @@
 
 # Drowsiness detector algorithm
 # try:)
-
 # try
 #hey
 # import packages
