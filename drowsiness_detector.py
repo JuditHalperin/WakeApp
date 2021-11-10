@@ -1,9 +1,7 @@
 
 # Drowsiness detector algorithm
-# try:)
-#conflict
-# try
-#hey
+
+
 # import packages
 from certifi.__main__ import args
 from scipy.spatial import distance as dist
