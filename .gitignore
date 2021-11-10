@@ -128,5 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# dat file
+# Our dat file
 shape_predictor_68_face_landmarks.dat
