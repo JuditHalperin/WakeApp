@@ -17,18 +17,31 @@ import dlib
 import cv2
 
 
+# eye aspect ratio threshold
+EYE_AR_THRESH = 0.3
+# number of frames ratio
+EYE_AR_CONSEC_FRAMES = 48
+# consecutive frames where the eye aspect ratio is below threshold
+COUNTER = 0
+# boolean variable indicating whether the alarm is on or off
+ALARM_ON = False
+
+# path to facial landmark predictor
+SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"
+# path alarm .WAV file
+ALARM = "bigwarning.wav"
+
+
 def sound_alarm(path):
     # play an alarm sound
     playsound.playsound(path)
 
 
 def eye_aspect_ratio(eye):
-    # compute the euclidean distances between the two sets of
-    # vertical eye landmarks (x, y)-coordinates
+    # compute the euclidean distances between the two sets of vertical eye landmarks (x, y)-coordinates
     A = dist.euclidean(eye[1], eye[5])
     B = dist.euclidean(eye[2], eye[4])
-    # compute the euclidean distance between the horizontal
-    # eye landmark (x, y)-coordinates
+    # compute the euclidean distance between the horizontal eye landmark (x, y)-coordinates
     C = dist.euclidean(eye[0], eye[3])
     # compute the eye aspect ratio
     ear = (A + B) / (2.0 * C)
@@ -36,27 +49,13 @@ def eye_aspect_ratio(eye):
     return ear
 
 
-# define two constants, one for the eye aspect ratio to indicate
-# blink and then a second constant for the number of consecutive
-# frames the eye must be below the threshold for to set off the
-# alarm
-EYE_AR_THRESH = 0.3
-EYE_AR_CONSEC_FRAMES = 48
-# initialize the frame counter as well as a boolean used to
-# indicate if the alarm is going off
-COUNTER = 0
-ALARM_ON = False
-
-
-# initialize dlib's face detector (HOG-based) and then create
-# the facial landmark predictor
+# initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
 print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(args["shape_predictor"])
+predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
 
 
-# grab the indexes of the facial landmarks for the left and
-# right eye, respectively
+# grab the indexes of the facial landmarks for the left and right eye, respectively
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
@@ -64,14 +63,12 @@ predictor = dlib.shape_predictor(args["shape_predictor"])
 # start the video stream thread
 print("[INFO] starting video stream thread...")
 vs = VideoStream(src=args["webcam"]).start()
-time.sleep(1.0)
+time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
 
 # loop over frames from the video stream
 while True:
-    # grab the frame from the threaded video file stream, resize
-    # it, and convert it to grayscale
-    # channels)
+    # grab the frame from the threaded video file stream, resize it, and convert it to grayscale channels
     frame = vs.read()
     frame = imutils.resize(frame, width=450)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
