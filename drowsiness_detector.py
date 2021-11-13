@@ -15,32 +15,27 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 
-# eye aspect ratio threshold
-EYE_AR_THRESH = 0.3
-# number of frames ratio
-EYE_AR_CONSEC_FRAMES = 48
-# consecutive frames where the eye aspect ratio is below threshold
-COUNTER = 0
-# boolean variable indicating whether the alarm is on or off
-ALARM_ON = False
+EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
+EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
+COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
+ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
-# path to facial landmark predictor
-SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"
-# path alarm .WAV file
-ALARM = "bigwarning.wav"
-# index of webcam on system
-WEBCAM = 0
+SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = "bigwarning.wav"  # path alarm .WAV file
+WEBCAM = 0  # index of webcam on system
 
 
 def sound_alarm(path):
-    play(AudioSegment.from_file(file=path, format="wav"))  # play an alarm sound
+    """play an alarm sound"""
+    play(AudioSegment.from_file(file=path, format="wav"))
 
 
 def eye_aspect_ratio(eye):
+    """compute the eye aspect ratio"""
     A = dist.euclidean(eye[1], eye[5])  # euclidean distances between the first set of vertical eye landmarks
     B = dist.euclidean(eye[2], eye[4])  # euclidean distances between the second set of vertical eye landmarks
     C = dist.euclidean(eye[0], eye[3])  # euclidean distance between the horizontal eye landmark
-    return (A + B) / (2.0 * C)  # eye aspect ratio
+    return (A + B) / (2.0 * C)
 
 
 # initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
@@ -48,7 +43,7 @@ print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
 
-# grab the indexes of the facial landmarks for the left and right eye, respectively
+# grab the indexes of the facial landmarks for the left and right eye
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
