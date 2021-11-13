@@ -3,18 +3,16 @@
 
 
 # import packages
-from certifi.__main__ import args
-from scipy.spatial import distance as dist
+import dlib
+import cv2
+import imutils
 from imutils.video import VideoStream
 from imutils import face_utils
 from threading import Thread
-import numpy as np
-import playsound
-import argparse
-import imutils
+from scipy.spatial import distance as dist
 import time
-import dlib
-import cv2
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 # eye aspect ratio threshold
@@ -30,10 +28,12 @@ ALARM_ON = False
 SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"
 # path alarm .WAV file
 ALARM = "bigwarning.wav"
+# index of webcam on system
+WEBCAM = 0
 
 
 def sound_alarm(path):
-    playsound.playsound(path)  # play an alarm sound
+    play(AudioSegment.from_file(file=path, format="wav"))  # play an alarm sound
 
 
 def eye_aspect_ratio(eye):
@@ -48,15 +48,13 @@ print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
 
-
 # grab the indexes of the facial landmarks for the left and right eye, respectively
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
-
 # start the video stream thread
 print("[INFO] starting video stream thread...")
-vs = VideoStream(src=args["webcam"]).start()
+vs = VideoStream(src=WEBCAM).start()
 time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
 
