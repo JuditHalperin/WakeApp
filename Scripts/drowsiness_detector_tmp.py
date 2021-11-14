@@ -79,7 +79,7 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
 
     face = detector(gray, 0)  # detect faces in the grayscale frame - we assume there is only one face
-    if not face: break  # DO SOMETHING
+    if not face: continue  # DO SOMETHING
 
     shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
     shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
