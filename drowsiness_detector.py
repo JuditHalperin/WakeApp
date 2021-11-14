@@ -1,69 +1,106 @@
-#https://towardsdatascience.com/how-to-detect-mouth-open-for-face-login-84ca834dff3b
-from PIL import Image, ImageDraw
 
-import face_recognition
-import math
-def get_lip_height(lip):
-    sum=0
-    for i in [2,3,4]:
-        # distance between two near points up and down
-        distance = math.sqrt( (lip[i][0] - lip[12-i][0])**2 +
-                              (lip[i][1] - lip[12-i][1])**2   )
-        sum += distance
-    return sum / 3
-def get_mouth_height(top_lip, bottom_lip):
-    sum=0
-    for i in [8,9,10]:
-        # distance between two near points up and down
-        distance = math.sqrt( (top_lip[i][0] - bottom_lip[18-i][0])**2 +
-                              (top_lip[i][1] - bottom_lip[18-i][1])**2   )
-        sum += distance
-    return sum / 3
-def check_mouth_open(top_lip, bottom_lip):
-    top_lip_height = get_lip_height(top_lip)
-    bottom_lip_height = get_lip_height(bottom_lip)
-    mouth_height = get_mouth_height(top_lip, bottom_lip)
+# Drowsiness detector algorithm
 
-    # if mouth is open more than lip height * ratio, return true.
-    ratio = 0.5
-    if mouth_height > min(top_lip_height, bottom_lip_height) * ratio:
-        return True
-    else:
-        return False
-image_file = 'obama.jpg'
 
-# Load the jpg file into a numpy array
-image = face_recognition.load_image_file(image_file)
+# import packages
+import dlib
+import cv2
+import imutils
+from imutils.video import VideoStream
+from imutils import face_utils
+from threading import Thread
+from scipy.spatial import distance as dist
+import time
+from pydub import AudioSegment
+from pydub.playback import play
 
-# Find all facial features in all the faces in the image
-face_landmarks_list = face_recognition.face_landmarks(image)
 
-print("I found {} face(s) in this photograph.".format(len(face_landmarks_list)))
+EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
+EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
+COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
+ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
-pil_image = Image.fromarray(image)
-d = ImageDraw.Draw(pil_image)
+SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = "bigwarning.wav"  # path alarm .WAV file
+WEBCAM = 0  # index of webcam on system
 
-for face_landmarks in face_landmarks_list:
-    # Print the location of each facial feature in this image
-    facial_features = [
-        'chin',
-        'left_eyebrow',
-        'right_eyebrow',
-        'nose_bridge',
-        'nose_tip',
-        'left_eye',
-        'right_eye',
-        'top_lip',
-        'bottom_lip'
-    ]
 
-    for facial_feature in facial_features:
-        print("The {} in this face has the following points: {}".format(facial_feature, face_landmarks[facial_feature]))
+def sound_alarm(path):
+    """play an alarm sound"""
+    play(AudioSegment.from_file(file=path, format="wav"))
 
-    # Let's trace out each facial feature in the image with a line!
-    for facial_feature in facial_features:
-        d.line(face_landmarks[facial_feature], width=5)
 
-# Display drawed image
-pil_image.show()
-#　pil_image.save('test.png')
+def eye_aspect_ratio(eye):
+    """compute the eye aspect ratio"""
+    A = dist.euclidean(eye[1], eye[5])  # euclidean distances between the first set of vertical eye landmarks
+    B = dist.euclidean(eye[2], eye[4])  # euclidean distances between the second set of vertical eye landmarks
+    C = dist.euclidean(eye[0], eye[3])  # euclidean distance between the horizontal eye landmark
+    return (A + B) / (2.0 * C)
+
+
+# initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
+print("[INFO] loading facial landmark predictor...")
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
+
+# grab the indexes of the facial landmarks for the left and right eye
+(lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
+(rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
+
+# start the video stream thread
+print("[INFO] starting video stream thread...")
+vs = VideoStream(src=WEBCAM).start()
+time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
+
+
+# loop over frames from the video stream
+while True:
+
+    frame = vs.read()  # grab the frame from the threaded video file stream
+    frame = imutils.resize(frame, width=450)  # resize the frame
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
+
+    face = detector(gray, 0)  # detect faces in the grayscale frame - we assume there is only one face
+    if not face: break  # DO SOMETHING
+
+    shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
+    shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
+
+    leftEye, rightEye = shape[lStart:lEnd], shape[rStart:rEnd]  # extract the left and right eye coordinates
+    leftEAR, rightEAR = eye_aspect_ratio(leftEye), eye_aspect_ratio(rightEye)  # compute the eye aspect ratios
+    ear = (leftEAR + rightEAR) / 2.0  # average the eye aspect ratios
+
+    # compute the convex hull for the left and right eye, then visualize each of the eyes
+    leftEyeHull = cv2.convexHull(leftEye)
+    rightEyeHull = cv2.convexHull(rightEye)
+    cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
+    cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
+
+    if ear < EYE_AR_THRESH:  # check if the eye aspect ratio is below the blink threshold
+        COUNTER += 1  # increment the blink frame counter
+        if COUNTER >= EYE_AR_CONSEC_FRAMES:  # check if the eyes were closed for a sufficient number
+            if not ALARM_ON:  # check if the alarm is not on
+                ALARM_ON = True  # turn the alarm on
+                # start a thread to have the alarm sound played in the background
+                t = Thread(target=sound_alarm, args=ALARM)
+                t.deamon = True
+                t.start()
+            cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
+
+    else:  # eye aspect ratio is not below the blink threshold
+        COUNTER = 0  # reset the counter
+        ALARM_ON = False  # reset the alarm
+        cv2.putText(frame, "EAR: {:.2f}".format(ear), (300, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the eye aspect ratio on the frame
+
+    # show the frame
+    cv2.imshow("Frame", frame)
+    key = cv2.waitKey(1) & 0xFF
+
+    # if the `q` key was pressed, break from the loop
+    if key == ord("q"):
+        break
+
+
+# cleanup
+cv2.destroyAllWindows()
+vs.stop()
