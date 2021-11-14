@@ -1,69 +1,18 @@
 import cv2
-import numpy as np
-from certifi.__main__ import args
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 from imutils import face_utils
 from threading import Thread
-import playsound
 import argparse
 import imutils
 import time
 import dlib
 from pydub import AudioSegment
 from pydub.playback import play
-'''
-print("Package Imported")
-#Image Reading Function
-img =cv2.imread("face_pic.jpg")
-#to display
-cv2.imshow("Output",img)
-#ms-1000 sec
-cv2.waitKey(0)
-'''
-'''
-cap=cv2.VideoCapture("video.mp4")
 
-while True:
-    success,img = cap.read()
-    cv2.imshow("Video",img)
-    if cv2.waitKey(1) & 0xFF==ord('q'):
-        break
-'''
-'''
-cap=cv2.VideoCapture(0)
-cap.set(3,640) #רוחב
-cap.set(4,480)#אורך
-cap.set(10,70)#תאורה
-while True:
-    success,img = cap.read()
-    cv2.imshow("Video",img)
-    if cv2.waitKey(1) & 0xFF==ord('q'):
-        break
-'''
-'''
-img =cv2.imread("face_pic.jpg")
-imgGray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-imgCanny=cv2.Canny(img,100,100)
-cv2.imshow("Gray Image",imgGray)
-cv2.imshow("Canny Image",imgCanny)
-cv2.waitKey(0)
-'''
-'''
 
-faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-img= cv2.imread("face_pic2.jpg")
-imgGray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-faces=faceCascade.detectMultiScale(imgGray,1.1,4)
-for(x,y,w,h) in faces:# עוברים בלולאה על הפרצופים שיש כבר כדי לדעת איפה להשים מרובע על פנים לתמונה חדשה
-    cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,0),2) # 250 -blue
-cv2.imshow("Result",img)
-cv2.waitKey(0)
-# לא הכי מדויק אבל הוא עובד ומהיר 
-'''
+# play an alarm sound
 def sound_alarm(path):
-	# play an alarm sound
-	#playsound.playsound(path)
 	wav_file = AudioSegment.from_file(file=path, format="wav")
 	play(wav_file)
 def eye_aspect_ratio(eye):
@@ -80,8 +29,6 @@ def eye_aspect_ratio(eye):
 	return ear
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
-#ap.add_argument("-p", "--shape-predictor", required=True,
-	#help="haarcascade_frontalface_default.xml")
 ap.add_argument("-a", "--alarm", type=str, default="bigwarning.wav",
 	help="bigwarning.wav")
 ap.add_argument("-w", "--webcam", type=int, default=0,
