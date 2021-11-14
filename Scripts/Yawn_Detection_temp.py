@@ -2,7 +2,7 @@ import cv2                                              # imports OpenCV library
 import numpy as np                                      # imports numpy as "np" library and associated functions and methods
 import dlib                                             # imports dlib library and associated functions
 
-path = "shape_predictor_68_face_landmarks.dat"                #creates a variable with the address of the dlib library
+path = "../Data/shape_predictor_68_face_landmarks.dat"       #creates a variable with the address of the dlib library
 
 predictor = dlib.shape_predictor(path)                  # creates a variable that stores the method of face decection from dlib library
 detector = dlib.get_frontal_face_detector()             # creates a variable that stores another method that dlib provides for detecting faces
