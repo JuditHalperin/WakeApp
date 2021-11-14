@@ -13,6 +13,7 @@ from scipy.spatial import distance as dist
 import time
 from pydub import AudioSegment
 from pydub.playback import play
+from playsound import playsound
 
 
 import blinks_detector
@@ -25,14 +26,15 @@ EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
 COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
 ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
-SHAPE_PREDICTOR = "../Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = "../Data/bigwarning.WAV"  # path alarm .WAV file
+SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = "bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 
 def sound_alarm(path):
     """play an alarm sound"""
-    play(AudioSegment.from_file(file=path, format="WAV"))
+ #   play(AudioSegment.from_file(file=path, format="wav"))
+    playsound(ALARM)
 
 
 def eye_aspect_ratio(eye):
