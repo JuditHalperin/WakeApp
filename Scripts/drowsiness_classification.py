@@ -19,8 +19,8 @@ import yawning_detector
 import time_detector
 
 
-SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = "bigwarning.wav"  # path alarm .WAV file
+SHAPE_PREDICTOR = "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = "Data/bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 
