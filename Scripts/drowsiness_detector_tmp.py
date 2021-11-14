@@ -15,7 +15,6 @@ from pydub import AudioSegment
 from pydub.playback import play
 from playsound import playsound
 
-
 import blinks_detector
 import yawning_detector
 import time_detector
@@ -26,8 +25,8 @@ EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
 COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
 ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
-SHAPE_PREDICTOR = "shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = "bigwarning.wav"  # path alarm .WAV file
+SHAPE_PREDICTOR = "../Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = "../Data/bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 
