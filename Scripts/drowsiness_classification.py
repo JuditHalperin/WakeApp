@@ -11,17 +11,19 @@ from imutils import face_utils
 from threading import Thread
 from scipy.spatial import distance as dist
 import time
-from pydub import AudioSegment
-from pydub.playback import play
+from playsound import playsound
+import os
 
 import blinks_detector
 import yawning_detector
 import time_detector
 
 
-SHAPE_PREDICTOR = "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = "Data/bigwarning.wav"  # path alarm .WAV file
+WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
+SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
+
 
 
 def compute_drowsiness_score():
@@ -35,8 +37,7 @@ def compute_drowsiness_score():
 
 def sound_alarm(path):
     """play an alarm sound"""
-    play(AudioSegment.from_file(file=path, format="wav"))
-
+    playsound(ALARM)
 
 # initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
 detector = dlib.get_frontal_face_detector()
