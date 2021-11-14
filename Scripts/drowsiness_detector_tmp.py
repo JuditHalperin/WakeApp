@@ -26,8 +26,9 @@ EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
 COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
 ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
-SHAPE_PREDICTOR = "../Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = os.getcwd().replace("\\", "/") + "/../Data/bigwarning.wav"  # path alarm .WAV file
+WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
+SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 
