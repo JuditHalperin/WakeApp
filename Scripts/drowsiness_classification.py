@@ -38,3 +38,11 @@ def sound_alarm(path):
     play(AudioSegment.from_file(file=path, format="wav"))
 
 
+# initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
+
+
+# start the video stream thread
+vs = VideoStream(src=WEBCAM).start()
+time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
