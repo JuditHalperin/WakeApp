@@ -14,6 +14,7 @@ import time
 from pydub import AudioSegment
 from pydub.playback import play
 
+
 import blinks_detector
 import yawning_detector
 import time_detector
