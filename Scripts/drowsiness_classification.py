@@ -9,7 +9,6 @@ import imutils
 from imutils.video import VideoStream
 from imutils import face_utils
 from threading import Thread
-from scipy.spatial import distance as dist
 import time
 from playsound import playsound
 import os
@@ -31,13 +30,13 @@ COUNTER = 0  # consecutive frames where the drowsiness score is above threshold
 ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
 
-def compute_drowsiness_score(shape):
+def compute_drowsiness_score(frame, shape):
     """compute the drowsiness score"""
-    blinks_score = blinks_detector.compute_blinks_score()
-    yawning_score = yawning_detector.compute_yawning_score()
+    blinks_score, frame = blinks_detector.compute_blinks_score(frame, shape)
+    yawning_score, frame = yawning_detector.compute_yawning_score(frame, shape)
     time_score = time_detector.compute_time_score()
     score = 12345  # CALCULATE THE SCORE #
-    return score
+    return score, frame
 
 
 def sound_alarm(path):
@@ -53,7 +52,6 @@ def send_mail(name, address):
 # initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(SHAPE_PREDICTOR)
-
 
 # start the video stream thread
 vs = VideoStream(src=WEBCAM).start()
@@ -72,7 +70,8 @@ while True:
     shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
     shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
-    drowsiness_score = compute_drowsiness_score(shape)  # compute the drowsiness score based on blink, yawning, duration and time
+    # compute the drowsiness score based on blink, yawning, duration and time
+    drowsiness_score, frame = compute_drowsiness_score(frame, shape)
 
     if drowsiness_score > DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
         COUNTER += 1  # increment the frame counter
