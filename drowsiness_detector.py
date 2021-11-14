@@ -13,6 +13,7 @@ from scipy.spatial import distance as dist
 import time
 from pydub import AudioSegment
 from pydub.playback import play
+import playsound
 
 
 EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
@@ -27,6 +28,7 @@ WEBCAM = 0  # index of webcam on system
 
 def sound_alarm(path):
     """play an alarm sound"""
+    #playsound.playsound(path)
     play(AudioSegment.from_file(file=path, format="wav"))
 
 
@@ -82,7 +84,7 @@ while True:
             if not ALARM_ON:  # check if the alarm is not on
                 ALARM_ON = True  # turn the alarm on
                 # start a thread to have the alarm sound played in the background
-                t = Thread(target=sound_alarm, args=ALARM)
+                t = Thread(target=sound_alarm, args=(ALARM,))
                 t.deamon = True
                 t.start()
             cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
