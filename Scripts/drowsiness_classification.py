@@ -31,11 +31,11 @@ ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
 
 def compute_drowsiness_score(frame, shape):
-    """compute the drowsiness score"""
-    blinks_score, frame = blinks_detector.compute_blinks_score(frame, shape)
-    yawning_score, frame = yawning_detector.compute_yawning_score(frame, shape)
-    time_score = time_detector.compute_time_score()
-    score = 12345  # CALCULATE THE SCORE #
+    """compute the drowsiness score and mark the eyes and the lips on the frame"""
+    blinks_score, frame = blinks_detector.compute_blinks_score(frame, shape)  # compute blinks score
+    yawning_score, frame = yawning_detector.compute_yawning_score(frame, shape)  # compute yawning score
+    time_score = time_detector.compute_time_score()  # compute time score
+    score = 1234  # CALCULATE THE SCORE #
     return score, frame
 
 
@@ -72,6 +72,7 @@ while True:
 
     # compute the drowsiness score based on blink, yawning, duration and time
     drowsiness_score, frame = compute_drowsiness_score(frame, shape)
+    print(drowsiness_score)
 
     if drowsiness_score > DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
         COUNTER += 1  # increment the frame counter

@@ -30,8 +30,7 @@ def visualize_eyes(frame, leftEye, rightEye):
 
 def compute_blinks_score(frame, shape):
     """compute the blinks score"""
-    leftEye, rightEye = shape[lStart:lEnd], shape[rStart:rEnd]  # extract the left and right eye coordinates
-    leftEAR, rightEAR = eye_aspect_ratio(leftEye), eye_aspect_ratio(rightEye)  # compute the eye aspect ratios
-    score = (leftEAR + rightEAR) / 2.0  # average the eye aspect ratios
-    frame = visualize_eyes(frame, leftEye, rightEye)  # visualize the eyes on the frame
+    left_eye, right_eye = shape[lStart:lEnd], shape[rStart:rEnd]  # extract the left and right eye coordinates
+    score = (eye_aspect_ratio(left_eye) + eye_aspect_ratio(right_eye)) / 2.0  # average the eye aspect ratios
+    frame = visualize_eyes(frame, left_eye, right_eye)  # visualize the eyes on the frame
     return score, frame  # return the blinks score and the frame
