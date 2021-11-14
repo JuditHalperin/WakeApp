@@ -29,6 +29,7 @@ def eye_aspect_ratio(eye):
 	return ear
 # construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
+
 ap.add_argument("-a", "--alarm", type=str, default="bigwarning.wav",
 	help="bigwarning.wav")
 ap.add_argument("-w", "--webcam", type=int, default=0,
