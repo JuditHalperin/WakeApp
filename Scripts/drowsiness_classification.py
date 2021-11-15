@@ -50,7 +50,7 @@ def send_mail(username, contact_name, contact_email):
         server.sendmail(sender_email, contact_email, message)
 
 
-def run(contact):
+def run(username, contact):
     """
     main function looping video stream.
     contact = (name, mail address) of emergency contact.
@@ -95,7 +95,7 @@ def run(contact):
                     alarm_counter += 1  # increment the alarm counter
                     if alarm_counter == MAIL_THRESHOLD:  # check if the alarm sounded a sufficient number of times
                         # start a thread to send a mail to emergency contact in the background
-                        mail_thread = Thread(target=send_mail, args=(contact[0], contact[1]))
+                        mail_thread = Thread(target=send_mail, args=(username, contact[0], contact[1]))
                         mail_thread.deamon = True
                         mail_thread.start()
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
