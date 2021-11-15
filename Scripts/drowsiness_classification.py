@@ -47,7 +47,7 @@ def send_mail(name, address):
 
 
 def run(webcam=0):
-    """main function looping video stream. webcam indicates the index of webcam on system"""
+    """main function looping video stream. webcam = index of webcam on system"""
 
     counter = 0  # consecutive frames where the drowsiness score is above threshold
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
