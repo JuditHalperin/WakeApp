@@ -93,19 +93,18 @@ def run(name, address, webcam=0):
         else:  # drowsiness score is below the threshold
             frame_counter = 0  # reset the drowsiness counter
             alarm_on = False  # reset the alarm
-            cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (300, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
+            cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
 
         # show the frame
         cv2.imshow("Frame", frame)
-        key = cv2.waitKey(1) & 0xFF
 
-        # if the `q` key was pressed, cleanup and break from the loop
+        # if the `q` key was pressed, break from the loop
+        key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
- #           cv2.destroyAllWindows()
-  #          vs.stop()
             break
         else:
             continue
+
     # cleanup
     vs.stream.release()
     cv2.destroyAllWindows()
