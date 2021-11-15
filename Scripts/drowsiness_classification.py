@@ -101,6 +101,17 @@ def run(name, address, webcam=0):
 
         # if the `q` key was pressed, cleanup and break from the loop
         if key == ord("q"):
-            cv2.destroyAllWindows()
-            vs.stop()
+ #           cv2.destroyAllWindows()
+  #          vs.stop()
             break
+        else:
+            continue
+    # cleanup
+    vs.stream.release()
+    cv2.destroyAllWindows()
+
+
+
+
+
+
