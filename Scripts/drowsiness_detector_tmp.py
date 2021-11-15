@@ -36,7 +36,7 @@ def sound_alarm(path):
     """play an alarm sound"""
  #   play(AudioSegment.from_file(file=path, format="wav"))
     playsound(path)
-    print('playing sound using  playsound')
+    print('playing sound using playsound')
 
 
 def eye_aspect_ratio(eye):
@@ -79,7 +79,10 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
 
     face = detector(gray, 0)  # detect faces in the grayscale frame - we assume there is only one face
-    if not face: continue  # DO SOMETHING
+    if not face:
+        print('could not find a face')  # message for debugging
+        time.sleep(1.0)  # pause for a second before continue
+        continue
 
     shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
     shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
