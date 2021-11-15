@@ -1,15 +1,18 @@
 
+# This temporary script can be used to send an email (from: driver.drowsiness.detection.mail@gmail.com)
+# Before running, choose driver_name, contact_name, and contact_email:
+
+driver_name = "Dan"
+contact_name = "Yudit"
+contact_email = "yudithalperin@gmail.com"
+
+
 import smtplib
 import ssl
 import os
 
 
 os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
-
-driver_name = "Dan"
-
-contact_name = "Yudit"
-contact_email = "yudithalperin@gmail.com"
 
 sender_email = "driver.drowsiness.detection.mail@gmail.com"
 sender_password = "0586169890"
