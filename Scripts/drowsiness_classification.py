@@ -69,7 +69,10 @@ def run(contact):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
 
         face = detector(gray, 0)  # detect faces in the grayscale frame - assuming there is only one face
-        if not face: continue  # DO SOMETHING #
+        if not face:
+            # DO SOMETHING #
+            time.sleep(1.0)  # pause for a second before continue
+            continue
         shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
         shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
@@ -77,7 +80,7 @@ def run(contact):
 
         if drowsiness_score > DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
             frame_counter += 1  # increment the frame counter
-            if frame_counter >= ALARM_THRESHOLD:  # check if the drowsiness score is high for a sufficient number
+            if frame_counter >= ALARM_THRESHOLD:  # check if the drowsiness score is high for a sufficient number of frames
                 if not alarm_on:  # check if the alarm is not on
                     # start a thread to have the alarm sound played in the background
                     alarm_thread = Thread(target=sound_alarm, args=(ALARM,))
@@ -85,8 +88,8 @@ def run(contact):
                     alarm_thread.start()
                     alarm_on = True  # turn the alarm on
                     alarm_counter += 1  # increment the alarm counter
-                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm beeped a sufficient number
-                        # start a thread to send a mail in the background
+                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm sounded a sufficient number of times
+                        # start a thread to send a mail to emergency contact in the background
                         mail_thread = Thread(target=send_mail, args=(contact[0], contact[1]))
                         mail_thread.deamon = True
                         mail_thread.start()
@@ -97,14 +100,11 @@ def run(contact):
             alarm_on = False  # reset the alarm
             cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
 
-        # show the frame
-        cv2.imshow("Frame", frame)
+        cv2.imshow("Frame", frame)  # show the frame
 
-        # if the `q` key was pressed, break from the loop
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord("q"):
+        if cv2.waitKey(1) & 0xFF == ord("q"):  # if the `q` key is pressed, break from the loop
             break
-        else:
+        else:  # needed?
             continue
 
     # cleanup
