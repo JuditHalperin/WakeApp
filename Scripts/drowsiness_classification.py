@@ -38,7 +38,7 @@ def compute_drowsiness_score(frame, shape):
 
 def sound_alarm(path):
     """play an alarm sound"""
-    playsound(ALARM)
+    playsound(path)
 
 
 def send_mail(name, address):
@@ -47,7 +47,7 @@ def send_mail(name, address):
 
 
 def run(webcam=0):
-    """main function looping video stream. webcom indicates the index of webcam on system"""
+    """main function looping video stream. webcam indicates the index of webcam on system"""
 
     counter = 0  # consecutive frames where the drowsiness score is above threshold
     alarm_on = False  # boolean variable indicating whether the alarm is on or off

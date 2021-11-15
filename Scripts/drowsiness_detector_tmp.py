@@ -35,7 +35,7 @@ WEBCAM = 0  # index of webcam on system
 def sound_alarm(path):
     """play an alarm sound"""
  #   play(AudioSegment.from_file(file=path, format="wav"))
-    playsound(ALARM)
+    playsound(path)
     print('playing sound using  playsound')
 
 
