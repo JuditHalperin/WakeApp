@@ -40,7 +40,6 @@ def compute_drowsiness_score(frame, shape):
 def sound_alarm(path):
     """play an alarm sound"""
     playsound(path)
-    print('playing sound using  playsound')
 
 
 def send_mail(name, address):
