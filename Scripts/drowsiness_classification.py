@@ -24,7 +24,8 @@ SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.da
 ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
 
 DROWSINESS_SCORE_THRESHOLD = 12345  # CHOOSE THRESHOLD  # drowsiness score threshold
-FRAMES_THRESHOLD = 48  # number of frames threshold
+ALARM_THRESHOLD = 48  # number of bad scored frames before beeping the alarm
+MAIL_THRESHOLD = 5  # number of alarms before sending mail
 
 
 def compute_drowsiness_score(frame, shape):
@@ -46,10 +47,11 @@ def send_mail(name, address):
     # SEND MAIL #
 
 
-def run(webcam=0):
+def run(name, address, webcam=0):
     """main function looping video stream. webcam = index of webcam on system"""
 
-    counter = 0  # consecutive frames where the drowsiness score is above threshold
+    frame_counter = 0  # count how many consecutive frames where the drowsiness score is above threshold
+    alarm_counter = 0  # count how many times the alarm was on
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
 
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)
@@ -71,18 +73,24 @@ def run(webcam=0):
         drowsiness_score, frame = compute_drowsiness_score(frame, shape)  # compute the drowsiness score based on blink, yawning, duration and time
 
         if drowsiness_score > DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
-            counter += 1  # increment the frame counter
-            if counter >= FRAMES_THRESHOLD:  # check if the drowsiness score is high for a sufficient number
+            frame_counter += 1  # increment the frame counter
+            if frame_counter >= ALARM_THRESHOLD:  # check if the drowsiness score is high for a sufficient number
                 if not alarm_on:  # check if the alarm is not on
-                    alarm_on = True  # turn the alarm on
                     # start a thread to have the alarm sound played in the background
-                    t = Thread(target=sound_alarm, args=(ALARM,))
-                    t.deamon = True
-                    t.start()
+                    alarm_thread = Thread(target=sound_alarm, args=(ALARM,))
+                    alarm_thread.deamon = True
+                    alarm_thread.start()
+                    alarm_on = True  # turn the alarm on
+                    alarm_counter += 1  # increment the alarm counter
+                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm beeped a sufficient number
+                        # start a thread to send a mail in the background
+                        mail_thread = Thread(target=send_mail, args=(name, address))
+                        mail_thread.deamon = True
+                        mail_thread.start()
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
 
         else:  # drowsiness score is below the threshold
-            counter = 0  # reset the counter
+            frame_counter = 0  # reset the drowsiness counter
             alarm_on = False  # reset the alarm
             cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (300, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
 
