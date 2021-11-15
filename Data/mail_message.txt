@@ -1,0 +1,5 @@
+Subject: DROWSINESS ALERT!
+Hi CONTACT_NAME,
+
+This message is to inform you that DRIVER_NAME is falling asleep while driving.
+Please contact the driver as soon as possible to prevent an accident!
