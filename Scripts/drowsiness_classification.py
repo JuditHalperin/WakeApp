@@ -56,7 +56,7 @@ def run(contact):
     contact = (name, mail address) of emergency contact.
     """
 
-    os. chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
+    os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
 
     frame_counter = 0  # count how many consecutive frames where the drowsiness score is above threshold
     alarm_counter = 0  # count how many times the alarm was on

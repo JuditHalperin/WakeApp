@@ -4,7 +4,7 @@ import ssl
 import os
 
 
-os. chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
+os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
 
 driver_name = "Dan"
 
