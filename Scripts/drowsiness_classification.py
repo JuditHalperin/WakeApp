@@ -47,8 +47,11 @@ def send_mail(name, address):
     # SEND MAIL #
 
 
-def run(name, address, webcam=0):
-    """main function looping video stream. webcam = index of webcam on system"""
+def run(contact):
+    """
+    main function looping video stream.
+    contact = (name, mail address) of emergency contact.
+    """
 
     frame_counter = 0  # count how many consecutive frames where the drowsiness score is above threshold
     alarm_counter = 0  # count how many times the alarm was on
@@ -56,7 +59,7 @@ def run(name, address, webcam=0):
 
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)
     predictor = dlib.shape_predictor(SHAPE_PREDICTOR)  # create facial landmark predictor
-    vs = VideoStream(src=webcam).start()  # start the video stream thread
+    vs = VideoStream(src=0).start()  # start the video stream thread, 0 indicates index of webcam on system
     time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
     while True:  # loop over frames from the video stream
@@ -84,7 +87,7 @@ def run(name, address, webcam=0):
                     alarm_counter += 1  # increment the alarm counter
                     if alarm_counter == MAIL_THRESHOLD:  # check if the alarm beeped a sufficient number
                         # start a thread to send a mail in the background
-                        mail_thread = Thread(target=send_mail, args=(name, address))
+                        mail_thread = Thread(target=send_mail, args=(contact[0], contact[1]))
                         mail_thread.deamon = True
                         mail_thread.start()
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
