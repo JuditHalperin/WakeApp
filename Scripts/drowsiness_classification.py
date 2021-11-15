@@ -78,7 +78,7 @@ def run(contact):
 
         drowsiness_score, frame = compute_drowsiness_score(frame, shape)  # compute the drowsiness score based on blink, yawning, duration and time
 
-        if drowsiness_score > DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
+        if drowsiness_score >= DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
             frame_counter += 1  # increment the frame counter
             if frame_counter >= ALARM_THRESHOLD:  # check if the drowsiness score is high for a sufficient number of frames
                 if not alarm_on:  # check if the alarm is not on
@@ -102,7 +102,7 @@ def run(contact):
 
         cv2.imshow("Frame", frame)  # show the frame
 
-        if cv2.waitKey(1) & 0xFF == ord("q"):  # if the `q` key is pressed, break from the loop
+        if (cv2.waitKey(1) & 0xFF) == ord("q"):  # if the `q` key is pressed, break from the loop
             break
         else:  # needed?
             continue
