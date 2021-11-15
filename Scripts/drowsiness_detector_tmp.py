@@ -11,8 +11,8 @@ from imutils import face_utils
 from threading import Thread
 from scipy.spatial import distance as dist
 import time
-from pydub import AudioSegment
-from pydub.playback import play
+#from pydub import AudioSegment
+#from pydub.playback import play
 from playsound import playsound
 import os
 
@@ -117,8 +117,11 @@ while True:
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
+    else:
+        continue
 
 
 # cleanup
+vs.stream.release()
 cv2.destroyAllWindows()
-vs.stop()
+#vs.stop()

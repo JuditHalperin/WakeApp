@@ -1,10 +1,17 @@
 import cv2                                              # imports OpenCV library and associated functions and methods
 import numpy as np                                      # imports numpy as "np" library and associated functions and methods
 import dlib                                             # imports dlib library and associated functions
+import os
 
-path = "../Data/shape_predictor_68_face_landmarks.dat"       #creates a variable with the address of the dlib library
 
-predictor = dlib.shape_predictor(path)                  # creates a variable that stores the method of face decection from dlib library
+
+#path = "shape_predictor_68_face_landmarks.dat"                #creates a variable with the address of the dlib library
+WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
+SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
+ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
+WEBCAM = 0  # index of webcam on system
+
+predictor = dlib.shape_predictor(SHAPE_PREDICTOR)                  # creates a variable that stores the method of face decection from dlib library
 detector = dlib.get_frontal_face_detector()             # creates a variable that stores another method that dlib provides for detecting faces
 
 def get_landmarks(im):                                  # creating a function that gets the landmarks on the face to make the code easier (detector returns cordinates of major facial features) 
@@ -61,7 +68,7 @@ def decision(image):                                    # Creating a function th
     
     return distance
          
-cap = cv2.VideoCapture(0)                               # Creates a varible that stores a method of OpenCV
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)                               # Creates a varible that stores a method of OpenCV
 yawns = 0                                               # Creates a counter for yawns
 mouth_open = False                                      # This variable will be used below to help know if the mouth has been closed after yawning
 
