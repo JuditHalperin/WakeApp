@@ -11,14 +11,10 @@ from imutils import face_utils
 from threading import Thread
 from scipy.spatial import distance as dist
 import time
-#from pydub import AudioSegment
-#from pydub.playback import play
+# from pydub import AudioSegment
+# from pydub.playback import play
 from playsound import playsound
 import os
-
-import blinks_detector
-import yawning_detector
-import time_detector
 
 
 EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
@@ -34,7 +30,7 @@ WEBCAM = 0  # index of webcam on system
 
 def sound_alarm(path):
     """play an alarm sound"""
- #   play(AudioSegment.from_file(file=path, format="wav"))
+    # play(AudioSegment.from_file(file=path, format="wav"))
     playsound(path)
     print('playing sound using playsound')
 
@@ -45,15 +41,6 @@ def eye_aspect_ratio(eye):
     B = dist.euclidean(eye[2], eye[4])  # euclidean distances between the second set of vertical eye landmarks
     C = dist.euclidean(eye[0], eye[3])  # euclidean distance between the horizontal eye landmark
     return (A + B) / (2.0 * C)
-
-
-def compute_drowsiness_score():
-    """compute the drowsiness score"""
-    blinks_score = blinks_detector.compute_blinks_score()
-    yawning_score = yawning_detector.compute_yawning_score()
-    time_score = time_detector.compute_time_score()
-    score = 100
-    return score
 
 
 # initialize dlib's face detector (HOG-based) and then create the facial landmark predictor
@@ -127,4 +114,4 @@ while True:
 # cleanup
 vs.stream.release()
 cv2.destroyAllWindows()
-#vs.stop()
+# vs.stop()
