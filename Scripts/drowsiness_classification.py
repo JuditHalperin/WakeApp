@@ -75,9 +75,10 @@ def run(username, contact):
 
         face = detector(gray, 0)  # detect faces in the grayscale frame - assuming there is only one face
         if not face:
-            # DO SOMETHING #
+            # DO SOMETHING IN GUI #
             time.sleep(1.0)  # pause for a second before continue
             continue
+
         shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
         shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
