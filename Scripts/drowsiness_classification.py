@@ -64,6 +64,7 @@ def run(username, contact):
 
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)
     predictor = dlib.shape_predictor("Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
+
     vs = VideoStream(src=0).start()  # start the video stream thread, 0 indicates index of webcam on system
     time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
