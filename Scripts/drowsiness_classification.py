@@ -115,8 +115,6 @@ def run(username, contact):
 
         if (cv2.waitKey(1) & 0xFF) == ord("q"):  # if the `q` key is pressed, break from the loop
             break
-        else:  # needed?
-            continue
 
     # cleanup
     vs.stream.release()
