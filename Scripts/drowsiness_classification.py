@@ -40,11 +40,11 @@ def sound_alarm():
     playsound("Data/bigwarning.wav")
 
 
-def send_mail(username, contact_name, contact_email):
-    """send a mail to emergency contact letting him know the driver is asleep"""
+def send_email(username, contact_name, contact_email):
+    """send an email to emergency contact letting him know the driver is asleep"""
     sender_email = "driver.drowsiness.detection.mail@gmail.com"
     sender_password = "0586169890"
-    message = open("Data/mail_message.txt").read().replace("CONTACT_NAME", contact_name).replace("DRIVER_NAME", username)  # read the message and paste contact and driver names
+    message = open("Data/email_message.txt").read().replace("CONTACT_NAME", contact_name).replace("DRIVER_NAME", username)  # read the message and paste contact and driver names
     with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, context=ssl.create_default_context()) as server:  # log in and send
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, contact_email, message)
@@ -53,7 +53,7 @@ def send_mail(username, contact_name, contact_email):
 def run(username, contact):
     """
     main function looping video stream.
-    contact = (name, mail address) of emergency contact.
+    contact = (name, email address) of emergency contact.
     """
 
     os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
@@ -87,6 +87,8 @@ def run(username, contact):
         if drowsiness_score >= DROWSINESS_SCORE_THRESHOLD:  # check if the drowsiness score is above the threshold
             frame_counter += 1  # increment the frame counter
             if frame_counter >= ALARM_THRESHOLD:  # check if the drowsiness score is high for a sufficient number of frames
+
+                # alarm:
                 if not alarm_on:  # check if the alarm is not on
                     # start a thread to have the alarm sound played in the background
                     alarm_thread = Thread(target=sound_alarm)
@@ -94,11 +96,14 @@ def run(username, contact):
                     alarm_thread.start()
                     alarm_on = True  # turn the alarm on
                     alarm_counter += 1  # increment the alarm counter
-                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm sounded a sufficient number of times
-                        # start a thread to send a mail to emergency contact in the background
-                        mail_thread = Thread(target=send_mail, args=(username, contact[0], contact[1]))
+
+                    # email:
+                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
+                        # start a thread to send an email to emergency contact in the background
+                        mail_thread = Thread(target=send_email, args=(username, contact[0], contact[1]))
                         mail_thread.deamon = True
                         mail_thread.start()
+
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
 
         else:  # drowsiness score is below the threshold
