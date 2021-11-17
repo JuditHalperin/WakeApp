@@ -107,8 +107,6 @@ while True:
     # if the `q` key was pressed, break from the loop
     if key == ord("q"):
         break
-    else:
-        continue
 
 
 # cleanup
