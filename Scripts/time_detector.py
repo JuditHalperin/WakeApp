@@ -1,4 +1,3 @@
-import time
 from datetime import datetime as dt
 '''Travel duration'''
 Travel_duration = {}  # A dictionary containing the hours range, each range has its own score
