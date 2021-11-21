@@ -56,7 +56,10 @@ while True:
 
     rect = detector(gray, 0)
     # rects = detector.detectMultiScale(gray, scaleFactor=1.1,  minNeighbors=5, minSize=(30, 30),flags=cv2.CASCADE_SCALE_IMAGE)
-
+    if not rect:
+        print('could not find a face')  # message for debugging
+        time.sleep(1.0)  # pause for a second before continue
+        continue
     shape = predictor(gray, rect[0])
     shape = face_utils.shape_to_np(shape)
     distance = lip_distance(shape)
