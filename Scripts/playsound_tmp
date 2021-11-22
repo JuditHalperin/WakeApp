@@ -1,5 +1,0 @@
-
-run in terminal:
-
-pip uninstall playsound
-pip install playsound==1.2.2
