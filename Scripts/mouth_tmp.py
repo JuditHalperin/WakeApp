@@ -65,6 +65,7 @@ while True:
         continue
     shape = predictor(gray, rect[0])
     shape = face_utils.shape_to_np(shape)
+
     distance = lip_distance(shape)
     lip = shape[48:60]
     cv2.drawContours(frame, [lip], -1, (0, 255, 0), 1)
