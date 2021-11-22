@@ -1,8 +1,12 @@
 
+# Time score functions
 
+
+# import packages
 from datetime import datetime as dt
 
-'''Travel duration'''
+
+# travel duration dictionary
 Travel_duration = {}  # A dictionary containing the hours range, each range has its own score
 # As the hours range increases so does the score
 score = 0  # score
@@ -17,7 +21,7 @@ while i < 24:
 Travel_duration[(24, "<")] = score * score  # temp calculation score
 
 
-'''Time of the day'''
+# time of the day dictionary
 '''
 6, 11 -9% 
 11, 17 -26%
@@ -35,9 +39,8 @@ score_time[21, 00] = score * 1.5
 score_time[00, 6] = score * 2
 
 
-
-def Score_time_minutes(score_time, end_time_hr):
-    '''The function receives a dictionary of range of hours  and time in hours,the function returns the score taking into account the minutes'''
+def time_minutes_score(score_time, end_time_hr):
+    """The function receives a dictionary of hours range and time in hours, and returns the score - taking the minutes into account"""
     for i in score_time.keys():
         start = i[0]
         end = i[1]
@@ -45,8 +48,8 @@ def Score_time_minutes(score_time, end_time_hr):
             return score_time[start, end]
 
 
-def Score_time():
-    '''The function returns a score  by time of travel time according to a calculation'''
+def time_score():
+    """The function returns a score by time of travel time according to a calculation"""
     current_time_hr = dt.now().hour
     current_time_m = dt.now().minute
     for i in score_time.keys():
@@ -57,13 +60,13 @@ def Score_time():
         elif end == current_time_hr:
             # In case that the min is more than the score changes,the hour is sent to the score calculation function taking into account the minutes
             if current_time_m != 0:
-                return Score_time_minutes(score_time, current_time_hr)
+                return time_minutes_score(score_time, current_time_hr)
             else:
                 return score_time[i]
 
 
-def Score_travel_duration(travel_duration_hr, travel_duration_minutes):
-    '''The function receives 2 parameters,duration of travel in hours and minutes, the function returns returns the score by travel time according to a calculation'''
+def travel_duration_score(travel_duration_hr, travel_duration_minutes):
+    """The function receives duration of travel in hours and in minutes, and returns the score by travel time according to a calculation"""
     if travel_duration_minutes >= 30:
         travel_duration_hr += 1
     else:
@@ -74,12 +77,3 @@ def Score_travel_duration(travel_duration_hr, travel_duration_minutes):
         return Travel_duration[travel_duration_hr, travel_duration_hr + 2]
     else:
         return Travel_duration[travel_duration_hr - 1, travel_duration_hr + 1]
-
-
-#print(Score_travel_duration(24, 00))
-#print(Score_time())
-
-
-def compute_time_score():
-    """compute the time score"""
-    # return score

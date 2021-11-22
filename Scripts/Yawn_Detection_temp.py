@@ -8,7 +8,7 @@ import os
 
 WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
 SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
+ALARM = WORKING_DIRECTORY + "Data/big_warning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 

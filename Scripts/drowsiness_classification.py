@@ -3,77 +3,31 @@
 
 
 # import packages
-from scipy.spatial import distance as dist
 from imutils.video import VideoStream
-from playsound import playsound
 from imutils import face_utils
 from threading import Thread
-import numpy as np
 import imutils
-import smtplib
 import time
 import dlib
 import cv2
-import ssl
 import os
 
 
+# import scripts
+import blink_score
+import yawn_score
+import time_score
+import drowsiness_alert
+
+
+# thresholds
 EMAIL_THRESHOLD = 5  # number of alarms before sending email
-
-
-def compute_eye_aspect_ratio(eye):
-    """The function computes the eye aspect ratio"""
-    A = dist.euclidean(eye[1], eye[5])  # euclidean distances between the first set of vertical eye landmarks
-    B = dist.euclidean(eye[2], eye[4])  # euclidean distances between the second set of vertical eye landmarks
-    C = dist.euclidean(eye[0], eye[3])  # euclidean distance between the horizontal eye landmark
-    return (A + B) / (2.0 * C)
-
-
-def compute_average_eye_aspect_ratios(shape):
-    """The function computes the average of the two eye aspect ratios"""
-    left_eye = shape[42:48]  # indexes of left eye
-    right_eye = shape[36:42]  # indexes of right eye
-
-    left_eye_aspect_ratio = compute_eye_aspect_ratio(left_eye)  # left eye aspect ratio
-    right_eye_aspect_ratio = compute_eye_aspect_ratio(right_eye)  # right eye aspect ratio
-
-    return (left_eye_aspect_ratio + right_eye_aspect_ratio) / 2.0  # average the eye aspect ratios
-
-
-def compute_lips_distance(shape):
-    """The function receives indexes of the face, and returns the distance between the top lip and the low lip"""
-    start_top_lip = shape[50:53]  # start indexes of top lip
-    end_top_lip = shape[61:64]  # end indexes of top lip
-    start_low_lip = shape[56:59]  # start indexes of low lip
-    end_low_lip = shape[65:68]  # end indexes of low lip
-
-    top_lip = np.concatenate((start_top_lip, end_top_lip))  # top lip coordinates
-    low_lip = np.concatenate((start_low_lip, end_low_lip))  # low lip coordinates
-
-    top_mean = np.mean(top_lip, axis=0)  # top lip mean
-    low_mean = np.mean(low_lip, axis=0)  # low lip mean
-
-    return abs(top_mean[1] - low_mean[1])  # distance between the top and the low lips
-
-
-def sound_alarm():
-    """The function plays an alarm sound"""
-    playsound("Data/bigwarning.wav")
-
-
-def send_email(username, contact_name, contact_email):
-    """The function sends an email to an emergency contact, letting him know the driver is asleep"""
-    sender_email = "driver.drowsiness.detection.mail@gmail.com"
-    sender_password = "0586169890"
-    message = open("Data/email_message.txt").read().replace("CONTACT_NAME", contact_name).replace("DRIVER_NAME", username)  # read the message and paste contact and driver names
-    with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, context=ssl.create_default_context()) as server:
-        server.login(sender_email, sender_password)  # log into sender account
-        server.sendmail(sender_email, contact_email, message)  # send the email to emergency contact
+# MORE THRESHOLDS #
 
 
 def run(username, contact):
     """
-    main function looping video stream and detecting driver drowsiness.
+    The main function loops the video stream to detect driver drowsiness.
     contact = (name, email address) of emergency contact.
     """
 
@@ -105,8 +59,8 @@ def run(username, contact):
         shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
         shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
-        eye_aspect_ratios = compute_average_eye_aspect_ratios(shape)
-        lips_distance = compute_lips_distance(shape)
+        eye_aspect_ratios = blink_score.compute_average_eye_aspect_ratios(shape)
+        lips_distance = yawn_score.compute_lips_distance(shape)
         # travel_duration = ?
         # time = ?
 
@@ -121,7 +75,7 @@ def run(username, contact):
                 # alarm:
                 if not alarm_on:  # check if the alarm is not on
                     # start a thread to have the alarm sound played in the background
-                    alarm_thread = Thread(target=sound_alarm)
+                    alarm_thread = Thread(target=drowsiness_alert.sound_alarm)
                     alarm_thread.deamon = True
                     alarm_thread.start()
                     alarm_on = True  # turn the alarm on
@@ -130,7 +84,7 @@ def run(username, contact):
                     # email:
                     if alarm_counter == EMAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
                         # start a thread to send an email to emergency contact in the background
-                        email_thread = Thread(target=send_email, args=(username, contact[0], contact[1]))
+                        email_thread = Thread(target=drowsiness_alert.send_email, args=(username, contact[0], contact[1]))
                         email_thread.deamon = True
                         email_thread.start()
 
