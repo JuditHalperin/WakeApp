@@ -18,7 +18,7 @@ import ssl
 import os
 
 
-MAIL_THRESHOLD = 5  # number of alarms before sending mail
+EMAIL_THRESHOLD = 5  # number of alarms before sending email
 
 
 def compute_eye_aspect_ratio(eye):
@@ -82,7 +82,7 @@ def run(username, contact):
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
     blinks_counter = 0  # number of blinks per minute?
     yawns_counter = 0  # number of yawns per minute?
-    alarm_counter = 0  # number of time the alarm was on
+    alarm_counter = 0  # number of times the alarm was on
 
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)
     predictor = dlib.shape_predictor("Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
@@ -128,15 +128,15 @@ def run(username, contact):
                     alarm_counter += 1  # increment the alarm counter
 
                     # email:
-                    if alarm_counter == MAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
+                    if alarm_counter == EMAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
                         # start a thread to send an email to emergency contact in the background
-                        mail_thread = Thread(target=send_email, args=(username, contact[0], contact[1]))
-                        mail_thread.deamon = True
-                        mail_thread.start()
+                        email_thread = Thread(target=send_email, args=(username, contact[0], contact[1]))
+                        email_thread.deamon = True
+                        email_thread.start()
 
-                cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw an alarm on the frame
+                cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
 
-        else:  # drowsiness score is below the threshold
+        else:
             alarm_on = False  # reset the alarm
             cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
 

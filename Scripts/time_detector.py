@@ -1,4 +1,7 @@
+
+
 from datetime import datetime as dt
+
 '''Travel duration'''
 Travel_duration = {}  # A dictionary containing the hours range, each range has its own score
 # As the hours range increases so does the score
@@ -12,6 +15,7 @@ while i < 24:
     Travel_duration[i, i + 2] = str(score)
     i += 2
 Travel_duration[(24, "<")] = score * score  # temp calculation score
+
 
 '''Time of the day'''
 '''
@@ -29,6 +33,8 @@ score_time[11, 17] = score * 1.75
 score_time[17, 21] = score * 1.25
 score_time[21, 00] = score * 1.5
 score_time[00, 6] = score * 2
+
+
 
 def Score_time_minutes(score_time, end_time_hr):
     '''The function receives a dictionary of range of hours  and time in hours,the function returns the score taking into account the minutes'''
@@ -54,6 +60,7 @@ def Score_time():
                 return Score_time_minutes(score_time, current_time_hr)
             else:
                 return score_time[i]
+
 
 def Score_travel_duration(travel_duration_hr, travel_duration_minutes):
     '''The function receives 2 parameters,duration of travel in hours and minutes, the function returns returns the score by travel time according to a calculation'''
