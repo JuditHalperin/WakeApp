@@ -34,10 +34,14 @@ def lip_distance(shape):
 
 
 YAWN_THRESH = 20  # Depends also on the distance of a person from the computer
+ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
+
 WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
 SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
 ALARM = WORKING_DIRECTORY + "Data/bigwarning.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
+
+
 print("-> Loading the predictor and detector...")
 detector = dlib.get_frontal_face_detector()
 # detector = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")  # Faster but less accurate
