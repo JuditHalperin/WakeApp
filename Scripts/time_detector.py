@@ -14,6 +14,13 @@ while i < 24:
 Travel_duration[(24, "<")] = score * score  # temp calculation score
 
 '''Time of the day'''
+'''
+6, 11 -9% 
+11, 17 -26%
+17, 21 -17%
+21, 00 -20%
+00, 6 -28%
+'''
 score_time = {}  # a dictionary that contains a range of hours of the day
 score = 11  # temp calculation score
 
