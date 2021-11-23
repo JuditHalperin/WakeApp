@@ -19,6 +19,10 @@ sender_password = "0586169890"
 
 message = open("Data/email_message.txt").read().replace("CONTACT_NAME", contact_name).replace("DRIVER_NAME", driver_name)
 
-with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, context=ssl.create_default_context()) as server:
-    server.login(sender_email, sender_password)
-    server.sendmail(sender_email, contact_email, message)
+try:
+    with smtplib.SMTP_SSL(host="smtp.gmail.com", port=465, context=ssl.create_default_context()) as server:
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, contact_email, message)
+
+except smtplib.SMTPRecipientsRefused:
+    print("Invalid email!")
