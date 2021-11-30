@@ -52,7 +52,10 @@ labels = []
 for (i, imagePath) in enumerate(imagePaths):
     # load the image and extract the class label (assuming that our path as the format: /path/to/dataset/{class}.{image_num}.jpg
     image = cv2.imread(imagePath)
-    label = imagePath.split(os.path.sep)[-1].split(".")[0]
+    if imagePath.split(os.path.sep)[-2]=='not_yawn':
+        label =0
+    else:
+        label=1
     # construct a feature vector raw pixel intensities, then update the data matrix and labels list
     features = image_to_feature_vector(image)
     data.append(features)
