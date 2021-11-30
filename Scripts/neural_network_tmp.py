@@ -97,4 +97,6 @@ print("[INFO] loss={:.4f}, accuracy: {:.4f}%".format(loss, accuracy * 100))
 
 # dump the network architecture and weights to file
 print("[INFO] dumping architecture and weights to file...")
+if not os.path.exists(MODEL):  # if the model directory does not exist - create it
+    os.mkdir(MODEL)
 model.save(MODEL)
