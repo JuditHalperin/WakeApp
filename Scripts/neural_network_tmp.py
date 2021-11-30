@@ -1,5 +1,5 @@
 
-### Implementing our own neural network with Python and Keras
+# Implementing our own neural network with Python and Keras
 
 
 # import the necessary packages
@@ -12,9 +12,26 @@ from keras.layers import Dense
 from keras.utils import np_utils
 from imutils import paths
 import numpy as np
-import argparse
+# import argparse
 import cv2
 import os
+
+
+os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
+
+DATASET = "Dataset"  # path to input dataset
+MODEL = "Model"  # path to output model file
+
+
+"""
+# construct the argument parse and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-d", "--dataset", required=True,
+                help="path to input dataset")
+ap.add_argument("-m", "--model", required=True,
+                help="path to output model file")
+args = vars(ap.parse_args())
+"""
 
 
 def image_to_feature_vector(image, size=(32, 32)):
@@ -23,16 +40,9 @@ def image_to_feature_vector(image, size=(32, 32)):
     return cv2.resize(image, size).flatten()
 
 
-# construct the argument parse and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-d", "--dataset", required=True,
-                help="path to input dataset")
-ap.add_argument("-m", "--model", required=True,
-                help="path to output model file")
-args = vars(ap.parse_args())
 # grab the list of images that we'll be describing
 print("[INFO] describing images...")
-imagePaths = list(paths.list_images(args["dataset"]))
+imagePaths = list(paths.list_images(DATASET))
 # initialize the data matrix and labels list
 data = []
 labels = []
@@ -90,12 +100,8 @@ model.fit(trainData, trainLabels, epochs=50, batch_size=128,
 
 # show the accuracy on the testing set
 print("[INFO] evaluating on testing set...")
-(loss, accuracy) = model.evaluate(testData, testLabels,
-                                  batch_size=128, verbose=1)
-print("[INFO] loss={:.4f}, accuracy: {:.4f}%".format(loss,
-                                                     accuracy * 100))
+(loss, accuracy) = model.evaluate(testData, testLabels, batch_size=128, verbose=1)
+print("[INFO] loss={:.4f}, accuracy: {:.4f}%".format(loss, accuracy * 100))
 # dump the network architecture and weights to file
 print("[INFO] dumping architecture and weights to file...")
-model.save(args["model"])
-
-
+model.save(MODEL)
