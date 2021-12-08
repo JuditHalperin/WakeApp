@@ -2,23 +2,34 @@
 
 from keras.models import load_model
 from keras.preprocessing import image
+import matplotlib.pyplot as plt
 import numpy as np
 
-# dimensions of our images
-img_width, img_height = 256, 256
 
-# load the model we saved
-model = load_model('yawn_detection1.h5')
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
+def load_image(img_path, show=False):
 
-# predicting images
-img = image.load_img('26.jpg', target_size=(img_width, img_height))
-x = image.img_to_array(img)
-x = np.expand_dims(x, axis=0)
+    img = image.load_img(img_path, target_size=(150, 150))
+    img_tensor = image.img_to_array(img)                    # (height, width, channels)
+    img_tensor = np.expand_dims(img_tensor, axis=0)         # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
+    img_tensor /= 255.                                      # imshow expects values in the range [0, 1]
 
-images = np.vstack([x])
-classes = model.predict_classes(images, batch_size=10)
-print(classes)
+    if show:
+        plt.imshow(img_tensor[0])
+        plt.axis('off')
+        plt.show()
 
+    return img_tensor
+
+
+
+# load model
+model = load_model("yawn_detection1.h5")
+
+# image path
+img_path = '26.jpg'
+
+# load a single image
+new_image = load_image(img_path)
+
+# check prediction
+pred = model.predict(new_image)
