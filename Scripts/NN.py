@@ -20,7 +20,7 @@ def plot_imgs(directory, top=10):
         img = plt.imread(img_path)
         plt.tight_layout()
         plt.imshow(img, cmap='gray')
-data_path = "/Dataset\\archive\\dataset_new\\train"
+data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\train"
 
 directories = ['/no_yawn', '/yawn']
 
@@ -33,8 +33,8 @@ train_datagen = ImageDataGenerator(horizontal_flip = True,
                                   validation_split = 0.1)
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
-train_data_path = "/Dataset\\archive\\dataset_new\\train"
-test_data_path = "/Dataset\\archive\\dataset_new\\test"
+train_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\train"
+test_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\test"
 
 train_set = train_datagen.flow_from_directory(train_data_path, target_size = (256,256),
                                               batch_size = batch_size,
@@ -71,7 +71,7 @@ checkpoint = ModelCheckpoint(model_path, monitor='val_accuracy', verbose=1,
                               save_best_only=True, mode='max')
 
 callbacks_list = [checkpoint]
-num_epochs = 10
+num_epochs = 30
 training_steps=train_set.n//train_set.batch_size
 validation_steps =test_set.n//test_set.batch_size
 history = model.fit_generator(train_set, epochs=num_epochs, steps_per_epoch=training_steps,validation_data=test_set,
