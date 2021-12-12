@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 import os
 
+os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
 
 def plot_imgs(directory, top=10):
     all_item_dirs = os.listdir(directory)
@@ -20,7 +21,7 @@ def plot_imgs(directory, top=10):
         img = plt.imread(img_path)
         plt.tight_layout()
         plt.imshow(img, cmap='gray')
-data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\train"
+data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
 
 directories = ['/no_yawn', '/yawn']
 
@@ -33,8 +34,8 @@ train_datagen = ImageDataGenerator(horizontal_flip = True,
                                   validation_split = 0.1)
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
-train_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\train"
-test_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Dataset\\test"
+train_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
+test_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\test"
 
 train_set = train_datagen.flow_from_directory(train_data_path, target_size = (256,256),
                                               batch_size = batch_size,
@@ -65,7 +66,7 @@ model.add(Dense(classes, activation = 'softmax'))
 
 print(model.summary())
 model.compile(loss = 'categorical_crossentropy',optimizer = 'adam' , metrics = ['accuracy'])
-model_path="yawn_detection1.h5"
+model_path="Data\\yawn_detection1.h5"
 
 checkpoint = ModelCheckpoint(model_path, monitor='val_accuracy', verbose=1,
                               save_best_only=True, mode='max')
