@@ -26,7 +26,7 @@ def load_image(img_path, show=False):
 model = load_model("yawn_detection1.h5")
 
 # load a single image
-img_path = '???.jpg'
+img_path = 'shout2.jfif'
 new_image = load_image(img_path)
 
 # predict
@@ -34,3 +34,6 @@ print(model.predict(new_image))
 
 # yes: [[0.597853 0.402147]]    [[0.5020148  0.49798524]]
 # no: [[0.75781137 0.2421886 ]]
+
+# laugh: [[0.46402633 0.53597367]] [[0.00147467 0.9985253 ]]
+# shout: [[0.2105293  0.78947073]] [[0.30247077 0.69752926]]
