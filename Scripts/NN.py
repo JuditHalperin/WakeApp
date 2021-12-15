@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 plt.style.use('dark_background')
 import os
 
-os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
 
 def plot_imgs(directory, top=10):
     all_item_dirs = os.listdir(directory)
@@ -21,7 +20,7 @@ def plot_imgs(directory, top=10):
         img = plt.imread(img_path)
         plt.tight_layout()
         plt.imshow(img, cmap='gray')
-data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
+data_path = "../Dataset\\archive\\dataset_new\\train"
 
 directories = ['/no_yawn', '/yawn']
 
@@ -34,8 +33,8 @@ train_datagen = ImageDataGenerator(horizontal_flip = True,
                                   validation_split = 0.1)
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
-train_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
-test_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\test"
+train_data_path = "../Dataset\\archive\\dataset_new\\train"
+test_data_path = "../Dataset\\archive\\dataset_new\\test"
 
 train_set = train_datagen.flow_from_directory(train_data_path, target_size = (256,256),
                                               batch_size = batch_size,
@@ -49,12 +48,20 @@ test_set = test_datagen.flow_from_directory(test_data_path, target_size = (256,2
 classes = 2
 
 model = Sequential()
+# input layer,creating the first layer input_shape are the variables
+# The first hidden layer.
+#Here we are learning a total of 32 filters and then we use Max Pooling to reduce the spatial dimensions of the output volume.
+# (Activation function decides, whether a neuron should be activated or not by calculating weighted sum and further adding bias with it)
 model.add(Conv2D(32, (3,3), padding = 'same', input_shape = (256,256,1), activation = 'relu'))
 model.add(MaxPooling2D(pool_size = (2,2)))
 
+#The second hidden.
+#Here we are learning a total of 64 filters and then we use Max Pooling to reduce the spatial dimensions of the output volume.
 model.add(Conv2D(64, (3,3), padding = 'same', activation = 'relu'))
 model.add(MaxPooling2D(pool_size = (2,2)))
 
+#The Third hidden layer.
+#Here we are learning a total of 128 filters and then we use Max Pooling to reduce the spatial dimensions of the output volume.
 model.add(Conv2D(128,(3,3), padding='same', activation='relu'))
 model.add(MaxPooling2D(pool_size=(2,2)))
 
@@ -66,14 +73,38 @@ model.add(Dense(classes, activation = 'softmax'))
 
 print(model.summary())
 model.compile(loss = 'categorical_crossentropy',optimizer = 'adam' , metrics = ['accuracy'])
-model_path="Data\\yawn_detection1.h5"
+model_path="yawn_detection1.h5"
+#A callback object can perform actions at various stages of training:
+#first parameter is the string representing our filename template.
+#we would like to monitor In this case, the validation Accuracy test (val_accuracy).
+#Since we are working with score,height is better, so we set mode="max".
+#Setting save_best_only=True ensures that the latest best model will not be overwritten.
+#the verbose=1 setting simply logs a notification to our terminal when a model is being serialized to disk during training.
 
 checkpoint = ModelCheckpoint(model_path, monitor='val_accuracy', verbose=1,
                               save_best_only=True, mode='max')
 
+checkpoint = ModelCheckpoint(model_path, monitor='val_loss', verbose=1,
+                              save_best_only=True, mode='min')
+
+#check points
 callbacks_list = [checkpoint]
-num_epochs = 30
+num_epochs = 40
 training_steps=train_set.n//train_set.batch_size
 validation_steps =test_set.n//test_set.batch_size
 history = model.fit_generator(train_set, epochs=num_epochs, steps_per_epoch=training_steps,validation_data=test_set,
                     validation_steps=validation_steps, callbacks = callbacks_list)
+plt.figure(figsize=(20,10))
+plt.subplot(1, 2, 1)
+plt.suptitle('Optimizer : Adam', fontsize=10)
+plt.ylabel('Loss', fontsize=16)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.legend(loc='upper right')
+
+plt.subplot(1, 2, 2)
+plt.ylabel('Accuracy', fontsize=16)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.show()
