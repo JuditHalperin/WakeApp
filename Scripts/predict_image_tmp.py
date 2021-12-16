@@ -26,7 +26,7 @@ def load_image(img_path, show=False):
 model = load_model("yawn_detection1.h5")
 
 # load a single image
-img_path = 'shout2.jfif'
+img_path = ''
 new_image = load_image(img_path)
 
 # predict
