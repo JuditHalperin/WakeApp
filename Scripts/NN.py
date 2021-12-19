@@ -84,8 +84,7 @@ model_path="yawn_detection1.h5"
 checkpoint = ModelCheckpoint(model_path, monitor='val_accuracy', verbose=1,
                               save_best_only=True, mode='max')
 
-checkpoint = ModelCheckpoint(model_path, monitor='val_loss', verbose=1,
-                              save_best_only=True, mode='min')
+#checkpoint = ModelCheckpoint(model_path, monitor='val_loss',save_best_only=True, mode='min')
 
 #check points
 callbacks_list = [checkpoint]
