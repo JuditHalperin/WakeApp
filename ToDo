@@ -1,0 +1,9 @@
+*Algorithm*
+Count blinks and yawns per 30 mins
+Both times determine the threshold
+
+Videos to test the blinks
+Frames per second
+Accuracy vs val_accuracy
+Recall + FP and FN – build the model again
+Main
