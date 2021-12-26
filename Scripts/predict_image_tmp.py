@@ -31,7 +31,6 @@ new_image = load_image(img_path)
 
 # predict
 print(model.predict(new_image))
-
 # yes: [[0.597853 0.402147]]    [[0.5020148  0.49798524]]
 # no: [[0.75781137 0.2421886 ]]
 

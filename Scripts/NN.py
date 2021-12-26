@@ -4,6 +4,9 @@ from keras.callbacks import ModelCheckpoint
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+import tensorflow as tf
+from keras import metrics
+from tensorflow import keras
 plt.style.use('dark_background')
 import os
 
@@ -73,6 +76,8 @@ model.add(Dense(classes, activation = 'softmax'))
 
 print(model.summary())
 model.compile(loss = 'categorical_crossentropy',optimizer = 'adam' , metrics = ['accuracy'])
+
+
 model_path="yawn_detection1.h5"
 #A callback object can perform actions at various stages of training:
 #first parameter is the string representing our filename template.
