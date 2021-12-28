@@ -34,8 +34,8 @@ def run(username, contact):
     os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
 
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
-    blinks_counter = 0  # number of blinks per minute?
-    yawns_counter = 0  # number of yawns per minute?
+    blinks_counter = 0  # number of blinks
+    yawns_counter = 0  # number of yawns
     alarm_counter = 0  # number of times the alarm was on
 
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)

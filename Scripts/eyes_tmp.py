@@ -15,6 +15,7 @@ import time
 # from pydub.playback import play
 from playsound import playsound
 import os
+from datetime import datetime
 
 
 EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
@@ -60,6 +61,9 @@ time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
 # loop over frames from the video stream
 while True:
+
+    time.sleep(1.0 / 3)
+    print(datetime.now())
 
     frame = vs.read()  # grab the frame from the threaded video file stream
     frame = imutils.resize(frame, width=450)  # resize the frame
