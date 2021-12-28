@@ -5,10 +5,15 @@ from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 import tensorflow as tf
-from keras import metrics
+#from keras import metrics
 from tensorflow import keras
+import sklearn.metrics as metrics
+import numpy
+from keras.models import load_model
 plt.style.use('dark_background')
 import os
+
+
 
 
 def plot_imgs(directory, top=10):
@@ -23,7 +28,7 @@ def plot_imgs(directory, top=10):
         img = plt.imread(img_path)
         plt.tight_layout()
         plt.imshow(img, cmap='gray')
-data_path = "../Dataset\\archive\\dataset_new\\train"
+data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
 
 directories = ['/no_yawn', '/yawn']
 
@@ -36,8 +41,8 @@ train_datagen = ImageDataGenerator(horizontal_flip = True,
                                   validation_split = 0.1)
 
 test_datagen = ImageDataGenerator(rescale = 1./255)
-train_data_path = "../Dataset\\archive\\dataset_new\\train"
-test_data_path = "../Dataset\\archive\\dataset_new\\test"
+train_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\train"
+test_data_path = "C:\\Users\\ortal\\source\\repos\\DriverDrowsinessDetection\\Data\\Dataset\\test"
 
 train_set = train_datagen.flow_from_directory(train_data_path, target_size = (256,256),
                                               batch_size = batch_size,
@@ -48,8 +53,10 @@ test_set = test_datagen.flow_from_directory(test_data_path, target_size = (256,2
                                               batch_size = batch_size,
                                               color_mode = 'grayscale',
                                               class_mode = 'categorical')
+actual_labels=[]
+actual_labels.extend(test_set.labels)
 classes = 2
-
+"""
 model = Sequential()
 # input layer,creating the first layer input_shape are the variables
 # The first hidden layer.
@@ -78,6 +85,7 @@ print(model.summary())
 model.compile(loss = 'categorical_crossentropy',optimizer = 'adam' , metrics = ['accuracy'])
 
 
+
 model_path="yawn_detection1.h5"
 #A callback object can perform actions at various stages of training:
 #first parameter is the string representing our filename template.
@@ -98,6 +106,19 @@ training_steps=train_set.n//train_set.batch_size
 validation_steps =test_set.n//test_set.batch_size
 history = model.fit_generator(train_set, epochs=num_epochs, steps_per_epoch=training_steps,validation_data=test_set,
                     validation_steps=validation_steps, callbacks = callbacks_list)
+                    """
+model = load_model("yawn_detection1.h5")
+predictions = model.predict(test_set)
+predicted_classes = numpy.argmax(predictions, axis=1)
+#tf.keras.metrics.confusion_matrix(actual_labels, predictions)
+#tf.math.confusion_matrix(actual_labels, predictions, num_classes=2)
+#matrix = tf.math.confusion_matrix(actual_labels.argmax(axis=1), predictions.argmax(axis=1))
+#print (predictions[0], actual_labels[0])
+
+confusion_matrix = metrics.confusion_matrix(y_true=actual_labels, y_pred=predicted_classes)
+print(confusion_matrix)
+
+"""
 plt.figure(figsize=(20,10))
 plt.subplot(1, 2, 1)
 plt.suptitle('Optimizer : Adam', fontsize=10)
@@ -112,3 +133,18 @@ plt.plot(history.history['accuracy'], label='Training Accuracy')
 plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
 plt.legend(loc='lower right')
 plt.show()
+plt.figure(figsize=(20,10))
+plt.subplot(1, 2, 1)
+plt.suptitle('Optimizer : Adam', fontsize=10)
+plt.ylabel('Loss', fontsize=16)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.legend(loc='upper right')
+
+plt.subplot(1, 2, 2)
+plt.ylabel('Accuracy', fontsize=16)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.show()
+"""
