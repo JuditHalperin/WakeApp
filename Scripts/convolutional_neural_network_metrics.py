@@ -3,20 +3,18 @@
 
 
 # import packages
-from keras.preprocessing.image import ImageDataGenerator
-from sklearn.metrics import confusion_matrix
-from keras.models import load_model
 from keras.preprocessing import image
+from keras.models import load_model
 import numpy as np
 import os
 
 
 def load_image(img_path):
-    """This function load an image"""
+    """This function loads an image"""
     img = image.load_img(img_path, target_size=(256, 256), color_mode='grayscale')
     img_tensor = image.img_to_array(img)  # (height, width, channels)
     img_tensor = np.expand_dims(img_tensor, axis=0)  # (1, height, width, channels), add a dimension because the model expects this shape: (batch_size, height, width, channels)
-    img_tensor /= 255.  # imshow expects values in the range [0, 1]
+    img_tensor /= 255.
     return img_tensor
 
 
