@@ -4,8 +4,11 @@
 
 # import packages
 from imutils.video import VideoStream
+from keras.models import load_model
 from imutils import face_utils
+from collections import deque
 from threading import Thread
+import datetime
 import imutils
 import time
 import dlib
@@ -16,30 +19,34 @@ import os
 # import scripts
 import blink_score
 import yawn_score
-import time_score
 import drowsiness_alert
 
 
-# thresholds
+FRAMES_PER_SECOND = 3  # number of frame per a second the drowsiness classification is based on
+WINDOW_SIZE = 60 * 5 * FRAMES_PER_SECOND  # frame window size (minutes * seconds * frames per second)
+
+EYE_ASPECT_RATIO_THRESHOLD = 0.3  # eye aspect ratio threshold
 EMAIL_THRESHOLD = 5  # number of alarms before sending email
-# MORE THRESHOLDS #
 
 
-def run(username, contact):
+def main(username, contact):
     """
     The main function loops the video stream to detect driver drowsiness.
     contact = (name, email address) of emergency contact.
     """
 
-    os.chdir(os.getcwd().replace("\\", "/").replace("Scripts", ""))  # set working directory
-
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
-    blinks_counter = 0  # number of blinks
-    yawns_counter = 0  # number of yawns
     alarm_counter = 0  # number of times the alarm was on
 
+    blink_queue = yawn_queue = deque()  # blink / yawn window queue
+    blink_counter = yawn_counter = 0  # number of blinks / yawns
+
+    last_frame_time = datetime.datetime.now().time()  # last time a frame was analyzed
+
     detector = dlib.get_frontal_face_detector()  # initialize dlib's face detector (HOG-based)
-    predictor = dlib.shape_predictor("Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
+    predictor = dlib.shape_predictor("../Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
+
+    model = load_model("../Data/Model/yawn_detection.h5")  # load the model
 
     vs = VideoStream(src=0).start()  # start the video stream thread, 0 indicates index of webcam on system
     time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
@@ -48,31 +55,46 @@ def run(username, contact):
 
         frame = vs.read()  # grab the frame from the threaded video file stream
         frame = imutils.resize(frame, width=450)  # resize the frame
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
+        gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
 
-        face = detector(gray, 0)  # detect faces in the grayscale frame - assuming there is only one face
+        face = detector(gray_frame, 0)  # detect faces in the grayscale frame - assuming there is only one face
         if not face:
             # DO SOMETHING IN GUI #
             time.sleep(1.0)  # pause for a second before continue
             continue
 
-        shape = predictor(gray, face[0])  # determine the facial landmarks for the face region
+        shape = predictor(gray_frame, face[0])  # determine the facial landmarks for the face region
         shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
-        eye_aspect_ratios = blink_score.compute_average_eye_aspect_ratios(shape)
-        lips_distance = yawn_score.compute_lips_distance(shape)
-        # travel_duration = ?
-        # time = ?
+        if datetime.datetime.now() >= last_frame_time + datetime.timedelta(seconds=1/FRAMES_PER_SECOND):  # if a sufficient time passed since the previous frame was analysed
 
-        cv2.drawContours(frame, [cv2.convexHull(shape[42:48])], -1, (0, 255, 0), 1)  # compute convex hull and visualize left eye
-        cv2.drawContours(frame, [cv2.convexHull(shape[36:42])], -1, (0, 255, 0), 1)  # compute convex hull and visualize right eye
-        cv2.drawContours(frame, [shape[48:60]], -1, (0, 255, 0), 1)  # visualize lips
+            # to detect drowsiness, check for a blink and a yawn in the frame:
 
-        if True:  # CONDITION
-            # UPDATE COUNTERS
-            if True:  # CHECK COUNTERS
+            last_frame_time = datetime.datetime.now()  # update the last time a frame was analyzed
 
-                # alarm:
+            # blink - by computing the eye aspect ratios
+            blink = blink_score.compute_average_eye_aspect_ratios(shape) < EYE_ASPECT_RATIO_THRESHOLD and True or False
+            if len(blink_queue) > WINDOW_SIZE:  # if the queue is full
+                blink_counter -= 1 if blink_queue.popleft() else 0  # pop the first frame (oldest) out, and update the counter
+            blink_queue.append(blink)  # insert the new frame to the end of the queue
+            blink_counter += 1 if blink else 0  # update the counter
+
+            # yawn - by using the yawn classification model
+            prediction = yawn_score.predict_yawn(gray_frame, model)  # [not yawn, yawn]
+            yawn = prediction[0] <= prediction[1] and True or False
+            if len(yawn_queue) > WINDOW_SIZE:  # if the queue is full
+                yawn_counter -= 1 if yawn_queue.popleft() else 0  # pop the first frame (oldest) out, and update the counter
+            yawn_queue.append(yawn)  # insert the new frame to the end of the queue
+            yawn_counter += 1 if yawn else 0  # update the counter
+
+            # compare the counters to thresholds to see if the driver is classified as drowsy - based on blinks OR yawns
+            if blink_counter >= BLINK_COUNT_THRESHOLD or yawn_counter >= YAWN_COUNT_THRESHOLD:
+
+                # reset queues and counters to
+                blink_queue = yawn_queue = deque()
+                blink_counter = yawn_counter = 0
+
+                # alarm
                 if not alarm_on:  # check if the alarm is not on
                     # start a thread to have the alarm sound played in the background
                     alarm_thread = Thread(target=drowsiness_alert.sound_alarm)
@@ -81,7 +103,7 @@ def run(username, contact):
                     alarm_on = True  # turn the alarm on
                     alarm_counter += 1  # increment the alarm counter
 
-                    # email:
+                    # email
                     if alarm_counter == EMAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
                         # start a thread to send an email to emergency contact in the background
                         email_thread = Thread(target=drowsiness_alert.send_email, args=(username, contact[0], contact[1]))
@@ -90,9 +112,14 @@ def run(username, contact):
 
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
 
-        else:
-            alarm_on = False  # reset the alarm
-            cv2.putText(frame, "Drowsiness Score: {:.2f}".format(drowsiness_score), (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the drowsiness score on the frame
+            else:
+
+                alarm_on = False  # reset the alarm
+                # add icons of blink / yawn on the frame
+
+        cv2.drawContours(frame, [cv2.convexHull(shape[42:48])], -1, (0, 255, 0), 1)  # compute convex hull and visualize left eye
+        cv2.drawContours(frame, [cv2.convexHull(shape[36:42])], -1, (0, 255, 0), 1)  # compute convex hull and visualize right eye
+        cv2.drawContours(frame, [shape[48:60]], -1, (0, 255, 0), 1)  # visualize lips
 
         cv2.imshow("Frame", frame)  # show the frame
 
