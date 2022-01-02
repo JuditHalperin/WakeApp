@@ -1,6 +1,8 @@
 
 
 # import packages
+import os
+
 from keras.models import load_model
 from keras.preprocessing import image
 import matplotlib.pyplot as plt

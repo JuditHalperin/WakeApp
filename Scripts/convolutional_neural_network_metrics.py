@@ -3,6 +3,8 @@
 
 
 # import packages
+from keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import confusion_matrix
 from keras.models import load_model
 from keras.preprocessing import image
 import numpy as np
@@ -47,4 +49,4 @@ f1_score = 2 * precision * recall / (precision + recall)
 
 # save results
 open("../Data/Model/confusion_matrix.txt", "w").write("TP: " + str(tp) + "\nTN: " + str(tn) + "\nFP: " + str(fp) + "\nFN: " + str(fn)
-                                                      + "\n\nPrecision: " + str(precision) + "\nRecall: " + str(recall) + "\nF1 score: " + str(f1_score))
+                                                          + "\n\nPrecision: " + str(precision) + "\nRecall: " + str(recall) + "\nF1 score: " + str(f1_score))
