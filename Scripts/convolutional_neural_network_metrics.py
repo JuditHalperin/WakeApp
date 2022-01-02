@@ -24,5 +24,5 @@ tn, fp, fn, tp = confusion_matrix(y_true=actual_labels, y_pred=predicted_classes
 precision = tp / (tp + fp)
 recall = tp / (tp + fn)
 f1_score = 2 * precision * recall / (precision + recall)
-open("../Data/Model/tmp_confusion_matrix.txt", "w").write("TP: " + str(tp) + "\nTN: " + str(tn) + "\nFP: " + str(fp) + "\nFN: " + str(fn)
+open("../Data/Model/confusion_matrix.txt", "w").write("TP: " + str(tp) + "\nTN: " + str(tn) + "\nFP: " + str(fp) + "\nFN: " + str(fn)
                                                           + "\n\nPrecision: " + str(precision) + "\nRecall: " + str(recall) + "\nF1 score: " + str(f1_score))
