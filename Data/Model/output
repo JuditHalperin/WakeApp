@@ -1,180 +1,220 @@
-C:\Users\Judit\miniconda3\envs\Python\python.exe C:/Users/Judit/source/repos/DriverDrowsinessDetection/Scripts/neural_network_model.py
-2021-12-29 18:08:45.829681: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
-2021-12-29 18:08:45.829816: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-Found 1233 images belonging to 2 classes.
+C:\Networks\miniconda3\python.exe C:/Users/ortal/source/repos/DriverDrowsinessDetection/Scripts/convolutional_neural_network_model.py
+2022-01-02 13:43:03.254548: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
+2022-01-02 13:43:03.255166: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+Found 1018 images belonging to 2 classes.
 Found 215 images belonging to 2 classes.
-2021-12-29 18:08:49.264316: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'nvcuda.dll'; dlerror: nvcuda.dll not found
-2021-12-29 18:08:49.264440: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
-2021-12-29 18:08:49.269505: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: Judit
-2021-12-29 18:08:49.269686: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: Judit
-2021-12-29 18:08:49.271170: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
+2022-01-02 13:43:08.759950: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'nvcuda.dll'; dlerror: nvcuda.dll not found
+2022-01-02 13:43:08.760588: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
+2022-01-02 13:43:08.772332: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: DESKTOP-VN2PLG0
+2022-01-02 13:43:08.773337: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: DESKTOP-VN2PLG0
+2022-01-02 13:43:08.775369: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
 To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-C:/Users/Judit/source/repos/DriverDrowsinessDetection/Scripts/neural_network_model.py:74: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
-  validation_steps=validation_steps, validation_data=test_set, callbacks=callbacks_list)
-Epoch 1/40
-2021-12-29 18:08:51.395927: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 1073741824 exceeds 10% of free system memory.
-2021-12-29 18:08:51.747850: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 536870912 exceeds 10% of free system memory.
-2021-12-29 18:08:53.249220: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 536870912 exceeds 10% of free system memory.
-2021-12-29 18:08:54.662263: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 536870912 exceeds 10% of free system memory.
-2021-12-29 18:08:54.662469: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 1073741824 exceeds 10% of free system memory.
-9/9 [==============================] - ETA: 0s - loss: 1.0652 - accuracy: 0.5231
-Epoch 00001: val_accuracy improved from -inf to 0.56250, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 45s 5s/step - loss: 1.0652 - accuracy: 0.5231 - val_loss: 0.6807 - val_accuracy: 0.5625
-Epoch 2/40
-9/9 [==============================] - ETA: 0s - loss: 0.6917 - accuracy: 0.5113
-Epoch 00002: val_accuracy improved from 0.56250 to 0.62500, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 44s 5s/step - loss: 0.6917 - accuracy: 0.5113 - val_loss: 0.6715 - val_accuracy: 0.6250
-Epoch 3/40
-9/9 [==============================] - ETA: 0s - loss: 0.6565 - accuracy: 0.5882
-Epoch 00003: val_accuracy did not improve from 0.62500
-9/9 [==============================] - 44s 5s/step - loss: 0.6565 - accuracy: 0.5882 - val_loss: 0.6701 - val_accuracy: 0.6016
-Epoch 4/40
-9/9 [==============================] - ETA: 0s - loss: 0.6074 - accuracy: 0.6407
-Epoch 00004: val_accuracy did not improve from 0.62500
-9/9 [==============================] - 44s 5s/step - loss: 0.6074 - accuracy: 0.6407 - val_loss: 0.6555 - val_accuracy: 0.5703
-Epoch 5/40
-9/9 [==============================] - ETA: 0s - loss: 0.5738 - accuracy: 0.6751
-Epoch 00005: val_accuracy did not improve from 0.62500
-9/9 [==============================] - 46s 5s/step - loss: 0.5738 - accuracy: 0.6751 - val_loss: 0.6117 - val_accuracy: 0.6250
-Epoch 6/40
-9/9 [==============================] - ETA: 0s - loss: 0.5693 - accuracy: 0.6597
-Epoch 00006: val_accuracy did not improve from 0.62500
-9/9 [==============================] - 46s 5s/step - loss: 0.5693 - accuracy: 0.6597 - val_loss: 0.6002 - val_accuracy: 0.6094
-Epoch 7/40
-9/9 [==============================] - ETA: 0s - loss: 0.5638 - accuracy: 0.6753
-Epoch 00007: val_accuracy improved from 0.62500 to 0.65625, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 49s 5s/step - loss: 0.5638 - accuracy: 0.6753 - val_loss: 0.5825 - val_accuracy: 0.6562
-Epoch 8/40
-9/9 [==============================] - ETA: 0s - loss: 0.5563 - accuracy: 0.6959
-Epoch 00008: val_accuracy improved from 0.65625 to 0.66406, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 47s 5s/step - loss: 0.5563 - accuracy: 0.6959 - val_loss: 0.5841 - val_accuracy: 0.6641
-Epoch 9/40
-9/9 [==============================] - ETA: 0s - loss: 0.5424 - accuracy: 0.6887
-Epoch 00009: val_accuracy did not improve from 0.66406
-9/9 [==============================] - 47s 5s/step - loss: 0.5424 - accuracy: 0.6887 - val_loss: 0.5661 - val_accuracy: 0.6406
-Epoch 10/40
-9/9 [==============================] - ETA: 0s - loss: 0.5559 - accuracy: 0.6796
-Epoch 00010: val_accuracy did not improve from 0.66406
-9/9 [==============================] - 48s 5s/step - loss: 0.5559 - accuracy: 0.6796 - val_loss: 0.5720 - val_accuracy: 0.6484
-Epoch 11/40
-9/9 [==============================] - ETA: 0s - loss: 0.5638 - accuracy: 0.6670
-Epoch 00011: val_accuracy did not improve from 0.66406
-9/9 [==============================] - 47s 5s/step - loss: 0.5638 - accuracy: 0.6670 - val_loss: 0.5981 - val_accuracy: 0.5781
-Epoch 12/40
-9/9 [==============================] - ETA: 0s - loss: 0.5404 - accuracy: 0.6875
-Epoch 00012: val_accuracy did not improve from 0.66406
-9/9 [==============================] - 47s 5s/step - loss: 0.5404 - accuracy: 0.6875 - val_loss: 0.5397 - val_accuracy: 0.6562
-Epoch 13/40
-9/9 [==============================] - ETA: 0s - loss: 0.5158 - accuracy: 0.7113
-Epoch 00013: val_accuracy improved from 0.66406 to 0.74219, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 44s 5s/step - loss: 0.5158 - accuracy: 0.7113 - val_loss: 0.4901 - val_accuracy: 0.7422
-Epoch 14/40
-9/9 [==============================] - ETA: 0s - loss: 0.5096 - accuracy: 0.7303
-Epoch 00014: val_accuracy did not improve from 0.74219
-9/9 [==============================] - 45s 5s/step - loss: 0.5096 - accuracy: 0.7303 - val_loss: 0.5178 - val_accuracy: 0.7188
-Epoch 15/40
-9/9 [==============================] - ETA: 0s - loss: 0.5010 - accuracy: 0.7339
-Epoch 00015: val_accuracy did not improve from 0.74219
-9/9 [==============================] - 44s 5s/step - loss: 0.5010 - accuracy: 0.7339 - val_loss: 0.5352 - val_accuracy: 0.7344
-Epoch 16/40
-9/9 [==============================] - ETA: 0s - loss: 0.4915 - accuracy: 0.7511
-Epoch 00016: val_accuracy did not improve from 0.74219
-9/9 [==============================] - 44s 5s/step - loss: 0.4915 - accuracy: 0.7511 - val_loss: 0.5493 - val_accuracy: 0.7188
-Epoch 17/40
-9/9 [==============================] - ETA: 0s - loss: 0.4746 - accuracy: 0.7493
-Epoch 00017: val_accuracy improved from 0.74219 to 0.77344, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 44s 5s/step - loss: 0.4746 - accuracy: 0.7493 - val_loss: 0.4945 - val_accuracy: 0.7734
-Epoch 18/40
-9/9 [==============================] - ETA: 0s - loss: 0.4663 - accuracy: 0.7548
-Epoch 00018: val_accuracy did not improve from 0.77344
-9/9 [==============================] - 44s 5s/step - loss: 0.4663 - accuracy: 0.7548 - val_loss: 0.4669 - val_accuracy: 0.7734
-Epoch 19/40
-9/9 [==============================] - ETA: 0s - loss: 0.4639 - accuracy: 0.7683
-Epoch 00019: val_accuracy did not improve from 0.77344
-9/9 [==============================] - 44s 5s/step - loss: 0.4639 - accuracy: 0.7683 - val_loss: 0.4893 - val_accuracy: 0.7734
-Epoch 20/40
-9/9 [==============================] - ETA: 0s - loss: 0.4547 - accuracy: 0.7819
-Epoch 00020: val_accuracy improved from 0.77344 to 0.82812, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 44s 5s/step - loss: 0.4547 - accuracy: 0.7819 - val_loss: 0.4202 - val_accuracy: 0.8281
-Epoch 21/40
-9/9 [==============================] - ETA: 0s - loss: 0.4504 - accuracy: 0.7674
-Epoch 00021: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 47s 5s/step - loss: 0.4504 - accuracy: 0.7674 - val_loss: 0.4500 - val_accuracy: 0.7812
-Epoch 22/40
-9/9 [==============================] - ETA: 0s - loss: 0.4292 - accuracy: 0.7982
-Epoch 00022: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 44s 5s/step - loss: 0.4292 - accuracy: 0.7982 - val_loss: 0.4122 - val_accuracy: 0.8203
-Epoch 23/40
-9/9 [==============================] - ETA: 0s - loss: 0.4162 - accuracy: 0.8118
-Epoch 00023: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 44s 5s/step - loss: 0.4162 - accuracy: 0.8118 - val_loss: 0.3968 - val_accuracy: 0.7969
-Epoch 24/40
-9/9 [==============================] - ETA: 0s - loss: 0.3993 - accuracy: 0.8118
-Epoch 00024: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 43s 5s/step - loss: 0.3993 - accuracy: 0.8118 - val_loss: 0.4474 - val_accuracy: 0.7969
-Epoch 25/40
-9/9 [==============================] - ETA: 0s - loss: 0.3955 - accuracy: 0.8154
-Epoch 00025: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 44s 5s/step - loss: 0.3955 - accuracy: 0.8154 - val_loss: 0.4947 - val_accuracy: 0.7656
-Epoch 26/40
-9/9 [==============================] - ETA: 0s - loss: 0.4162 - accuracy: 0.8036
-Epoch 00026: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 43s 5s/step - loss: 0.4162 - accuracy: 0.8036 - val_loss: 0.4234 - val_accuracy: 0.7891
-Epoch 27/40
-9/9 [==============================] - ETA: 0s - loss: 0.3942 - accuracy: 0.8081
-Epoch 00027: val_accuracy did not improve from 0.82812
-9/9 [==============================] - 63s 7s/step - loss: 0.3942 - accuracy: 0.8081 - val_loss: 0.4437 - val_accuracy: 0.8125
-Epoch 28/40
-9/9 [==============================] - ETA: 0s - loss: 0.3450 - accuracy: 0.8489
-Epoch 00028: val_accuracy improved from 0.82812 to 0.84375, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 58s 6s/step - loss: 0.3450 - accuracy: 0.8489 - val_loss: 0.3825 - val_accuracy: 0.8438
-Epoch 29/40
-9/9 [==============================] - ETA: 0s - loss: 0.3557 - accuracy: 0.8416
-Epoch 00029: val_accuracy did not improve from 0.84375
-9/9 [==============================] - 75s 8s/step - loss: 0.3557 - accuracy: 0.8416 - val_loss: 0.3728 - val_accuracy: 0.8438
-Epoch 30/40
-9/9 [==============================] - ETA: 0s - loss: 0.3325 - accuracy: 0.8516
-Epoch 00030: val_accuracy did not improve from 0.84375
-9/9 [==============================] - 52s 6s/step - loss: 0.3325 - accuracy: 0.8516 - val_loss: 0.4096 - val_accuracy: 0.7969
-Epoch 31/40
-9/9 [==============================] - ETA: 0s - loss: 0.3008 - accuracy: 0.8637
-Epoch 00031: val_accuracy did not improve from 0.84375
-9/9 [==============================] - 68s 8s/step - loss: 0.3008 - accuracy: 0.8637 - val_loss: 0.4006 - val_accuracy: 0.8125
-Epoch 32/40
-9/9 [==============================] - ETA: 0s - loss: 0.2909 - accuracy: 0.8778
-Epoch 00032: val_accuracy did not improve from 0.84375
-9/9 [==============================] - 64s 7s/step - loss: 0.2909 - accuracy: 0.8778 - val_loss: 0.5138 - val_accuracy: 0.8203
-Epoch 33/40
-9/9 [==============================] - ETA: 0s - loss: 0.2799 - accuracy: 0.8878
-Epoch 00033: val_accuracy improved from 0.84375 to 0.85938, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 59s 6s/step - loss: 0.2799 - accuracy: 0.8878 - val_loss: 0.3218 - val_accuracy: 0.8594
-Epoch 34/40
-9/9 [==============================] - ETA: 0s - loss: 0.3073 - accuracy: 0.8742
-Epoch 00034: val_accuracy improved from 0.85938 to 0.89062, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 44s 5s/step - loss: 0.3073 - accuracy: 0.8742 - val_loss: 0.3218 - val_accuracy: 0.8906
-Epoch 35/40
-9/9 [==============================] - ETA: 0s - loss: 0.2561 - accuracy: 0.8923
-Epoch 00035: val_accuracy did not improve from 0.89062
-9/9 [==============================] - 45s 5s/step - loss: 0.2561 - accuracy: 0.8923 - val_loss: 0.2763 - val_accuracy: 0.8594
-Epoch 36/40
-9/9 [==============================] - ETA: 0s - loss: 0.2634 - accuracy: 0.8950
-Epoch 00036: val_accuracy improved from 0.89062 to 0.90625, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 65s 7s/step - loss: 0.2634 - accuracy: 0.8950 - val_loss: 0.2512 - val_accuracy: 0.9062
-Epoch 37/40
-9/9 [==============================] - ETA: 0s - loss: 0.2433 - accuracy: 0.9059
-Epoch 00037: val_accuracy did not improve from 0.90625
-9/9 [==============================] - 64s 7s/step - loss: 0.2433 - accuracy: 0.9059 - val_loss: 0.3327 - val_accuracy: 0.8672
-Epoch 38/40
-9/9 [==============================] - ETA: 0s - loss: 0.2418 - accuracy: 0.8984
-Epoch 00038: val_accuracy did not improve from 0.90625
-9/9 [==============================] - 63s 7s/step - loss: 0.2418 - accuracy: 0.8984 - val_loss: 0.3656 - val_accuracy: 0.8906
-Epoch 39/40
-9/9 [==============================] - ETA: 0s - loss: 0.2757 - accuracy: 0.8805
-Epoch 00039: val_accuracy did not improve from 0.90625
-9/9 [==============================] - 58s 6s/step - loss: 0.2757 - accuracy: 0.8805 - val_loss: 0.3005 - val_accuracy: 0.8594
-Epoch 40/40
-9/9 [==============================] - ETA: 0s - loss: 0.2371 - accuracy: 0.8986
-Epoch 00040: val_accuracy improved from 0.90625 to 0.92969, saving model to ../Data/Model\yawn_detection.h5
-9/9 [==============================] - 63s 7s/step - loss: 0.2371 - accuracy: 0.8986 - val_loss: 0.1814 - val_accuracy: 0.9297
+C:/Users/ortal/source/repos/DriverDrowsinessDetection/Scripts/convolutional_neural_network_model.py:73: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
+  history = model.fit_generator(train_set, epochs=num_epochs , validation_data=validation_set, callbacks=callbacks_list)
+Epoch 1/50
+2022-01-02 13:43:10.795546: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 1023410176 exceeds 10% of free system memory.
+2022-01-02 13:43:11.161702: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
+2022-01-02 13:43:11.330495: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 511705088 exceeds 10% of free system memory.
+2022-01-02 13:43:12.501067: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
+2022-01-02 13:43:14.196514: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
+8/8 [==============================] - ETA: 0s - loss: 1.0784 - accuracy: 0.5098
+Epoch 00001: val_accuracy improved from -inf to 0.65581, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 79s 9s/step - loss: 1.0784 - accuracy: 0.5098 - val_loss: 0.6843 - val_accuracy: 0.6558
+Epoch 2/50
+8/8 [==============================] - ETA: 0s - loss: 0.6868 - accuracy: 0.5727
+Epoch 00002: val_accuracy improved from 0.65581 to 0.66047, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 76s 10s/step - loss: 0.6868 - accuracy: 0.5727 - val_loss: 0.6115 - val_accuracy: 0.6605
+Epoch 3/50
+8/8 [==============================] - ETA: 0s - loss: 0.6675 - accuracy: 0.5678
+Epoch 00003: val_accuracy did not improve from 0.66047
+8/8 [==============================] - 70s 9s/step - loss: 0.6675 - accuracy: 0.5678 - val_loss: 0.6221 - val_accuracy: 0.5395
+Epoch 4/50
+8/8 [==============================] - ETA: 0s - loss: 0.6073 - accuracy: 0.5943
+Epoch 00004: val_accuracy improved from 0.66047 to 0.68372, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.6073 - accuracy: 0.5943 - val_loss: 0.5611 - val_accuracy: 0.6837
+Epoch 5/50
+8/8 [==============================] - ETA: 0s - loss: 0.5686 - accuracy: 0.6768
+Epoch 00005: val_accuracy did not improve from 0.68372
+8/8 [==============================] - 59s 7s/step - loss: 0.5686 - accuracy: 0.6768 - val_loss: 0.5584 - val_accuracy: 0.6605
+Epoch 6/50
+8/8 [==============================] - ETA: 0s - loss: 0.5691 - accuracy: 0.6572
+Epoch 00006: val_accuracy did not improve from 0.68372
+8/8 [==============================] - 58s 7s/step - loss: 0.5691 - accuracy: 0.6572 - val_loss: 0.5433 - val_accuracy: 0.6605
+Epoch 7/50
+8/8 [==============================] - ETA: 0s - loss: 0.5510 - accuracy: 0.6798
+Epoch 00007: val_accuracy did not improve from 0.68372
+8/8 [==============================] - 71s 9s/step - loss: 0.5510 - accuracy: 0.6798 - val_loss: 0.5279 - val_accuracy: 0.6837
+Epoch 8/50
+8/8 [==============================] - ETA: 0s - loss: 0.5446 - accuracy: 0.6945
+Epoch 00008: val_accuracy did not improve from 0.68372
+8/8 [==============================] - 63s 8s/step - loss: 0.5446 - accuracy: 0.6945 - val_loss: 0.6382 - val_accuracy: 0.6465
+Epoch 9/50
+8/8 [==============================] - ETA: 0s - loss: 0.5303 - accuracy: 0.6935
+Epoch 00009: val_accuracy improved from 0.68372 to 0.71628, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.5303 - accuracy: 0.6935 - val_loss: 0.5057 - val_accuracy: 0.7163
+Epoch 10/50
+8/8 [==============================] - ETA: 0s - loss: 0.5204 - accuracy: 0.7092
+Epoch 00010: val_accuracy improved from 0.71628 to 0.73023, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 60s 8s/step - loss: 0.5204 - accuracy: 0.7092 - val_loss: 0.5051 - val_accuracy: 0.7302
+Epoch 11/50
+8/8 [==============================] - ETA: 0s - loss: 0.5096 - accuracy: 0.7141
+Epoch 00011: val_accuracy improved from 0.73023 to 0.75349, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.5096 - accuracy: 0.7141 - val_loss: 0.4807 - val_accuracy: 0.7535
+Epoch 12/50
+8/8 [==============================] - ETA: 0s - loss: 0.5044 - accuracy: 0.7230
+Epoch 00012: val_accuracy did not improve from 0.75349
+8/8 [==============================] - 60s 7s/step - loss: 0.5044 - accuracy: 0.7230 - val_loss: 0.4760 - val_accuracy: 0.7023
+Epoch 13/50
+8/8 [==============================] - ETA: 0s - loss: 0.4962 - accuracy: 0.7210
+Epoch 00013: val_accuracy improved from 0.75349 to 0.76744, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 60s 7s/step - loss: 0.4962 - accuracy: 0.7210 - val_loss: 0.4479 - val_accuracy: 0.7674
+Epoch 14/50
+8/8 [==============================] - ETA: 0s - loss: 0.4804 - accuracy: 0.7583
+Epoch 00014: val_accuracy did not improve from 0.76744
+8/8 [==============================] - 58s 7s/step - loss: 0.4804 - accuracy: 0.7583 - val_loss: 0.4598 - val_accuracy: 0.7395
+Epoch 15/50
+8/8 [==============================] - ETA: 0s - loss: 0.4773 - accuracy: 0.7642
+Epoch 00015: val_accuracy did not improve from 0.76744
+8/8 [==============================] - 58s 7s/step - loss: 0.4773 - accuracy: 0.7642 - val_loss: 0.4533 - val_accuracy: 0.7581
+Epoch 16/50
+8/8 [==============================] - ETA: 0s - loss: 0.4749 - accuracy: 0.7613
+Epoch 00016: val_accuracy did not improve from 0.76744
+8/8 [==============================] - 58s 7s/step - loss: 0.4749 - accuracy: 0.7613 - val_loss: 0.4689 - val_accuracy: 0.7535
+Epoch 17/50
+8/8 [==============================] - ETA: 0s - loss: 0.4424 - accuracy: 0.7868
+Epoch 00017: val_accuracy did not improve from 0.76744
+8/8 [==============================] - 59s 7s/step - loss: 0.4424 - accuracy: 0.7868 - val_loss: 0.4184 - val_accuracy: 0.7674
+Epoch 18/50
+8/8 [==============================] - ETA: 0s - loss: 0.4347 - accuracy: 0.7967
+Epoch 00018: val_accuracy improved from 0.76744 to 0.79535, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.4347 - accuracy: 0.7967 - val_loss: 0.4023 - val_accuracy: 0.7953
+Epoch 19/50
+8/8 [==============================] - ETA: 0s - loss: 0.4092 - accuracy: 0.8075
+Epoch 00019: val_accuracy did not improve from 0.79535
+8/8 [==============================] - 59s 7s/step - loss: 0.4092 - accuracy: 0.8075 - val_loss: 0.4693 - val_accuracy: 0.7767
+Epoch 20/50
+8/8 [==============================] - ETA: 0s - loss: 0.4115 - accuracy: 0.7927
+Epoch 00020: val_accuracy did not improve from 0.79535
+8/8 [==============================] - 58s 7s/step - loss: 0.4115 - accuracy: 0.7927 - val_loss: 0.3878 - val_accuracy: 0.7953
+Epoch 21/50
+8/8 [==============================] - ETA: 0s - loss: 0.4012 - accuracy: 0.8075
+Epoch 00021: val_accuracy improved from 0.79535 to 0.81860, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.4012 - accuracy: 0.8075 - val_loss: 0.4118 - val_accuracy: 0.8186
+Epoch 22/50
+8/8 [==============================] - ETA: 0s - loss: 0.3778 - accuracy: 0.8153
+Epoch 00022: val_accuracy improved from 0.81860 to 0.85116, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 61s 8s/step - loss: 0.3778 - accuracy: 0.8153 - val_loss: 0.3389 - val_accuracy: 0.8512
+Epoch 23/50
+8/8 [==============================] - ETA: 0s - loss: 0.3502 - accuracy: 0.8350
+Epoch 00023: val_accuracy improved from 0.85116 to 0.85581, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.3502 - accuracy: 0.8350 - val_loss: 0.3190 - val_accuracy: 0.8558
+Epoch 24/50
+8/8 [==============================] - ETA: 0s - loss: 0.3337 - accuracy: 0.8458
+Epoch 00024: val_accuracy improved from 0.85581 to 0.86512, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.3337 - accuracy: 0.8458 - val_loss: 0.3100 - val_accuracy: 0.8651
+Epoch 25/50
+8/8 [==============================] - ETA: 0s - loss: 0.3246 - accuracy: 0.8497
+Epoch 00025: val_accuracy improved from 0.86512 to 0.86977, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.3246 - accuracy: 0.8497 - val_loss: 0.3219 - val_accuracy: 0.8698
+Epoch 26/50
+8/8 [==============================] - ETA: 0s - loss: 0.2968 - accuracy: 0.8772
+Epoch 00026: val_accuracy did not improve from 0.86977
+8/8 [==============================] - 59s 7s/step - loss: 0.2968 - accuracy: 0.8772 - val_loss: 0.3596 - val_accuracy: 0.8465
+Epoch 27/50
+8/8 [==============================] - ETA: 0s - loss: 0.2837 - accuracy: 0.8831
+Epoch 00027: val_accuracy improved from 0.86977 to 0.88372, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.2837 - accuracy: 0.8831 - val_loss: 0.2930 - val_accuracy: 0.8837
+Epoch 28/50
+8/8 [==============================] - ETA: 0s - loss: 0.2680 - accuracy: 0.8900
+Epoch 00028: val_accuracy improved from 0.88372 to 0.88837, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.2680 - accuracy: 0.8900 - val_loss: 0.2599 - val_accuracy: 0.8884
+Epoch 29/50
+8/8 [==============================] - ETA: 0s - loss: 0.2637 - accuracy: 0.8841
+Epoch 00029: val_accuracy improved from 0.88837 to 0.89302, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.2637 - accuracy: 0.8841 - val_loss: 0.2576 - val_accuracy: 0.8930
+Epoch 30/50
+8/8 [==============================] - ETA: 0s - loss: 0.2517 - accuracy: 0.8969
+Epoch 00030: val_accuracy improved from 0.89302 to 0.89767, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.2517 - accuracy: 0.8969 - val_loss: 0.2383 - val_accuracy: 0.8977
+Epoch 31/50
+8/8 [==============================] - ETA: 0s - loss: 0.2427 - accuracy: 0.8978
+Epoch 00031: val_accuracy did not improve from 0.89767
+8/8 [==============================] - 58s 7s/step - loss: 0.2427 - accuracy: 0.8978 - val_loss: 0.2696 - val_accuracy: 0.8930
+Epoch 32/50
+8/8 [==============================] - ETA: 0s - loss: 0.2597 - accuracy: 0.8910
+Epoch 00032: val_accuracy did not improve from 0.89767
+8/8 [==============================] - 60s 8s/step - loss: 0.2597 - accuracy: 0.8910 - val_loss: 0.2763 - val_accuracy: 0.8837
+Epoch 33/50
+8/8 [==============================] - ETA: 0s - loss: 0.2607 - accuracy: 0.8811
+Epoch 00033: val_accuracy did not improve from 0.89767
+8/8 [==============================] - 58s 7s/step - loss: 0.2607 - accuracy: 0.8811 - val_loss: 0.2657 - val_accuracy: 0.8791
+Epoch 34/50
+8/8 [==============================] - ETA: 0s - loss: 0.2142 - accuracy: 0.9077
+Epoch 00034: val_accuracy improved from 0.89767 to 0.90233, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.2142 - accuracy: 0.9077 - val_loss: 0.2231 - val_accuracy: 0.9023
+Epoch 35/50
+8/8 [==============================] - ETA: 0s - loss: 0.2039 - accuracy: 0.9293
+Epoch 00035: val_accuracy improved from 0.90233 to 0.93023, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 58s 7s/step - loss: 0.2039 - accuracy: 0.9293 - val_loss: 0.1907 - val_accuracy: 0.9302
+Epoch 36/50
+8/8 [==============================] - ETA: 0s - loss: 0.1823 - accuracy: 0.9263
+Epoch 00036: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 60s 7s/step - loss: 0.1823 - accuracy: 0.9263 - val_loss: 0.2086 - val_accuracy: 0.9116
+Epoch 37/50
+8/8 [==============================] - ETA: 0s - loss: 0.1684 - accuracy: 0.9352
+Epoch 00037: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 60s 7s/step - loss: 0.1684 - accuracy: 0.9352 - val_loss: 0.1818 - val_accuracy: 0.9256
+Epoch 38/50
+8/8 [==============================] - ETA: 0s - loss: 0.1781 - accuracy: 0.9253
+Epoch 00038: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 59s 7s/step - loss: 0.1781 - accuracy: 0.9253 - val_loss: 0.2581 - val_accuracy: 0.9023
+Epoch 39/50
+8/8 [==============================] - ETA: 0s - loss: 0.2025 - accuracy: 0.9204
+Epoch 00039: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 60s 7s/step - loss: 0.2025 - accuracy: 0.9204 - val_loss: 0.1925 - val_accuracy: 0.9209
+Epoch 40/50
+8/8 [==============================] - ETA: 0s - loss: 0.1603 - accuracy: 0.9401
+Epoch 00040: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 59s 7s/step - loss: 0.1603 - accuracy: 0.9401 - val_loss: 0.1622 - val_accuracy: 0.9256
+Epoch 41/50
+8/8 [==============================] - ETA: 0s - loss: 0.1522 - accuracy: 0.9430
+Epoch 00041: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 59s 7s/step - loss: 0.1522 - accuracy: 0.9430 - val_loss: 0.1842 - val_accuracy: 0.9302
+Epoch 42/50
+8/8 [==============================] - ETA: 0s - loss: 0.1439 - accuracy: 0.9450
+Epoch 00042: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 59s 7s/step - loss: 0.1439 - accuracy: 0.9450 - val_loss: 0.1987 - val_accuracy: 0.9163
+Epoch 43/50
+8/8 [==============================] - ETA: 0s - loss: 0.1409 - accuracy: 0.9391
+Epoch 00043: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 61s 8s/step - loss: 0.1409 - accuracy: 0.9391 - val_loss: 0.1981 - val_accuracy: 0.9163
+Epoch 44/50
+8/8 [==============================] - ETA: 0s - loss: 0.1219 - accuracy: 0.9538
+Epoch 00044: val_accuracy did not improve from 0.93023
+8/8 [==============================] - 60s 7s/step - loss: 0.1219 - accuracy: 0.9538 - val_loss: 0.2209 - val_accuracy: 0.9163
+Epoch 45/50
+8/8 [==============================] - ETA: 0s - loss: 0.1365 - accuracy: 0.9528
+Epoch 00045: val_accuracy improved from 0.93023 to 0.93488, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.1365 - accuracy: 0.9528 - val_loss: 0.1855 - val_accuracy: 0.9349
+Epoch 46/50
+8/8 [==============================] - ETA: 0s - loss: 0.1308 - accuracy: 0.9528
+Epoch 00046: val_accuracy did not improve from 0.93488
+8/8 [==============================] - 60s 8s/step - loss: 0.1308 - accuracy: 0.9528 - val_loss: 0.1994 - val_accuracy: 0.9302
+Epoch 47/50
+8/8 [==============================] - ETA: 0s - loss: 0.1346 - accuracy: 0.9519
+Epoch 00047: val_accuracy did not improve from 0.93488
+8/8 [==============================] - 59s 7s/step - loss: 0.1346 - accuracy: 0.9519 - val_loss: 0.2014 - val_accuracy: 0.9256
+Epoch 48/50
+8/8 [==============================] - ETA: 0s - loss: 0.1299 - accuracy: 0.9509
+Epoch 00048: val_accuracy did not improve from 0.93488
+8/8 [==============================] - 58s 7s/step - loss: 0.1299 - accuracy: 0.9509 - val_loss: 0.2076 - val_accuracy: 0.9302
+Epoch 49/50
+8/8 [==============================] - ETA: 0s - loss: 0.1573 - accuracy: 0.9411
+Epoch 00049: val_accuracy improved from 0.93488 to 0.94884, saving model to ../Data/Model\yawn_detection.h5
+8/8 [==============================] - 59s 7s/step - loss: 0.1573 - accuracy: 0.9411 - val_loss: 0.1886 - val_accuracy: 0.9488
+Epoch 50/50
+8/8 [==============================] - ETA: 0s - loss: 0.1163 - accuracy: 0.9509
+Epoch 00050: val_accuracy did not improve from 0.94884
+8/8 [==============================] - 60s 7s/step - loss: 0.1163 - accuracy: 0.9509 - val_loss: 0.2158 - val_accuracy: 0.9302
 
 Process finished with exit code 0
