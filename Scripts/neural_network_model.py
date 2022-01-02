@@ -11,15 +11,15 @@ import matplotlib.pyplot as plt
 
 # Dataset paths
 train_data_path = "../Data/Dataset/train"
-test_data_path = "../Data/Dataset/test"
+validation_data_path = "../Data/Dataset/validation"
 
 # Define an image generator to format images before using them
 train_data_generator = ImageDataGenerator(horizontal_flip=True, rescale=1./255, zoom_range=0.2, validation_split=0.1)
-test_data_generator = ImageDataGenerator(rescale=1./255)
+validation_data_generator = ImageDataGenerator(rescale=1./255)
 
 # Pre-process images using the image generator
 train_set = train_data_generator.flow_from_directory(train_data_path, target_size=(256, 256), batch_size=128, color_mode='grayscale', class_mode='categorical')
-test_set = test_data_generator.flow_from_directory(test_data_path, target_size=(256, 256), batch_size=128, color_mode='grayscale', class_mode='categorical')
+validation_set = validation_data_generator.flow_from_directory(validation_data_path, target_size=(256, 256), batch_size=128, color_mode='grayscale', class_mode='categorical')
 
 # Model layers building: create a sequence of layers by adding one layer at a time until the network architecture is satisfying
 model = Sequential()
@@ -67,11 +67,11 @@ num_epochs = 40
 
 # Calculate the dataset steps
 training_steps = train_set.n // train_set.batch_size
-validation_steps = test_set.n // test_set.batch_size
+validation_steps = validation_set.n // validation_set.batch_size
 
 # Train the model
 history = model.fit_generator(train_set, epochs=num_epochs, steps_per_epoch=training_steps,
-                              validation_steps=validation_steps, validation_data=test_set, callbacks=callbacks_list)
+                              validation_steps=validation_steps, validation_data=validation_set, callbacks=callbacks_list)
 
 # plot loss and accuracy
 plt.figure(figsize=(20, 10))

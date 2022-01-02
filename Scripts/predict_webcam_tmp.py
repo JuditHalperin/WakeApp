@@ -11,7 +11,7 @@ from keras.preprocessing import image
 
 
 # load model
-model = load_model("yawn_detection1.h5")
+model = load_model("../Data/Model/yawn_detection.h5")
 
 # get an image from the webcam
 WEBCAM = 0  # index of webcam on system
