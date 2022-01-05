@@ -13,12 +13,12 @@ import imutils
 import time
 import dlib
 import cv2
-import os
 
 
 # import scripts
 import blink_score
 import yawn_score
+import thresholds
 import drowsiness_alert
 
 
@@ -34,6 +34,8 @@ def main(username, contact):
     The main function loops the video stream to detect driver drowsiness.
     contact = (name, email address) of emergency contact.
     """
+
+    start_drive_time = datetime.datetime.now()
 
     alarm_on = False  # boolean variable indicating whether the alarm is on or off
     alarm_counter = 0  # number of times the alarm was on
@@ -66,6 +68,7 @@ def main(username, contact):
         shape = predictor(gray_frame, face[0])  # determine the facial landmarks for the face region
         shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
+        # Date instead of time!
         if datetime.datetime.now() >= last_frame_time + datetime.timedelta(seconds=1/FRAMES_PER_SECOND):  # if a sufficient time passed since the previous frame was analysed
 
             # to detect drowsiness, check for a blink and a yawn in the frame:
@@ -88,7 +91,7 @@ def main(username, contact):
             yawn_counter += 1 if yawn else 0  # update the counter
 
             # compare the counters to thresholds to see if the driver is classified as drowsy - based on blinks OR yawns
-            if blink_counter >= BLINK_COUNT_THRESHOLD or yawn_counter >= YAWN_COUNT_THRESHOLD:
+            if blink_counter >= thresholds.blink_count_threshold() or yawn_counter >= thresholds.yawn_count_threshold():
 
                 # reset queues and counters to
                 blink_queue = yawn_queue = deque()

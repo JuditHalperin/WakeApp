@@ -1,9 +1,0 @@
-*Algorithm*
-Count blinks and yawns per 30 mins
-Both times determine the threshold
-
-Videos to test the blinks
-Frames per second: ~30
-Accuracy vs val_accuracy
-Main
-GUI
