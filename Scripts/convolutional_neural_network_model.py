@@ -65,12 +65,8 @@ callbacks_list = [checkpoint]
 # define the number of epochs, which is an arbitrary cutoff, used to separate training into distinct phases, which is useful for logging and periodic evaluation
 num_epochs = 50
 
-# calculate the dataset steps
-training_steps = train_set.n // train_set.batch_size
-validation_steps = validation_set.n // validation_set.batch_size
-
 # train the model
-history = model.fit_generator(train_set, epochs=num_epochs , validation_data=validation_set, callbacks=callbacks_list)
+history = model.fit_generator(train_set, epochs=num_epochs, validation_data=validation_set, callbacks=callbacks_list)
 
 # plot loss and accuracy
 plt.figure(figsize=(20, 10))
