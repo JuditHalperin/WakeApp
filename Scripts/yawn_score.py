@@ -1,6 +1,9 @@
 
 # Yawn score functions
 
+# (Note: the first function can be used to detect yawns relaying on the distance between the lips.
+# Our algorithm uses a neural network model for the yawning classification, so this function is not used)
+
 
 # import packages
 from keras.preprocessing import image
