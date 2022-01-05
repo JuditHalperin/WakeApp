@@ -1,7 +1,5 @@
 
 # Time score functions
-
-
 # import packages
 from datetime import datetime as dt
 
