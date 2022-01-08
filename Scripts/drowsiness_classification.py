@@ -30,10 +30,7 @@ EYE_ASPECT_RATIO_THRESHOLD = 0.3  # eye aspect ratio threshold
 EMAIL_THRESHOLD = 3  # number of alarms before sending email
 
 
-# username, contact_name, contact_email
-
-
-def main():
+def main(username, contact_name, contact_email):
     """The main function loops the video stream to detect driver drowsiness"""
 
     start_drive_time = last_frame_time = datetime.datetime.now()  # beginning time; last time a frame was analyzed
@@ -80,13 +77,6 @@ def main():
             else:
                 blink_counter = 0
 
-            """
-            if len(blink_queue) > WINDOW_SIZE:  # if the queue is full
-                blink_counter -= 1 if blink_queue.popleft() else 0  # pop the first frame (oldest) out, and update the counter
-            blink_queue.append(blink)  # insert the new frame to the end of the queue
-            blink_counter += 1 if blink else 0  # update the counter
-            """
-
             # yawn - by using the yawn classification model
             prediction = yawn_score.predict_yawn(gray_frame, model)  # [not yawn, yawn]
             yawn = prediction[0] <= prediction[1] and True or False
@@ -116,14 +106,12 @@ def main():
                     alarm_on = True  # turn the alarm on
                     alarm_counter += 1  # increment the alarm counter
 
-                    """
                     # email
                     if alarm_counter == EMAIL_THRESHOLD:  # check if the alarm sounded a specific number of times - this way the email can be sent only once
                         # start a thread to send an email to emergency contact in the background
                         email_thread = Thread(target=drowsiness_alert.send_email, args=(username, contact_name, contact_email))
                         email_thread.deamon = True
                         email_thread.start()
-                    """
 
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
 
