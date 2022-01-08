@@ -130,6 +130,3 @@ def main(username, contact_name, contact_email):
     # cleanup
     vs.stream.release()
     cv2.destroyAllWindows()
-
-
-main()
