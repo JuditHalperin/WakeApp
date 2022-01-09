@@ -72,8 +72,7 @@ class DrowsinessDetector:
         blink_counter = yawn_counter = 0  # number of blinks / yawns
 
         detector = dlib.get_frontal_face_detector()  # initialize the face detector
-        predictor = dlib.shape_predictor(
-            "../Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
+        predictor = dlib.shape_predictor("../Data/shape_predictor_68_face_landmarks.dat")  # create facial landmark predictor using the shape predictor
 
         model = load_model("../Data/Model/yawn_detection.h5")  # load the yawning classification model
 
@@ -123,8 +122,6 @@ class DrowsinessDetector:
                 if blink_counter >= thresholds.blink_count_threshold(current_time, travel_duration) or \
                         yawn_counter >= thresholds.yawn_count_threshold(current_time, travel_duration):
 
-                    print(blink_counter, yawn_counter)
-
                     # reset queues and counters to
                     yawn_queue = deque()
                     blink_counter = 0
@@ -170,11 +167,13 @@ class DrowsinessDetector:
                 self.panel.image = frame
 
     def on_close(self):
+
         try:
             # set the stop event, cleanup the camera, and allow the rest of the quit process to continue
             self.stop_event.set()
             self.vs.stop()
             self.root.destroy()
+
         except Exception as exception:
             messagebox.showerror("Error", exception)
 
