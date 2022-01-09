@@ -62,9 +62,6 @@ time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 # loop over frames from the video stream
 while True:
 
-    time.sleep(1.0 / 3)
-    print(datetime.now())
-
     frame = vs.read()  # grab the frame from the threaded video file stream
     frame = imutils.resize(frame, width=450)  # resize the frame
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
