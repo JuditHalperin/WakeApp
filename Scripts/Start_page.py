@@ -78,5 +78,3 @@ class Infopage:
 root = Tk()
 obj = Infopage(root)
 root.mainloop()
-
-
