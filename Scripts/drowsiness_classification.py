@@ -57,10 +57,8 @@ class DrowsinessDetector:
 		btn = tk.Button(self.root, text="Stop", command=self.on_close)
 		btn.pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
 
-		# set a callback to handle when the window is closed
 		self.root.wm_title("Driver Drowsiness Detection")
-		self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)
-
+		self.root.wm_protocol("WM_DELETE_WINDOW", self.do_nothing)  # set a callback to handle when the window is closed
 		self.root.resizable(False, False)
 
 	def video_loop(self):
@@ -169,12 +167,13 @@ class DrowsinessDetector:
 
 	def on_close(self):
 		# set the stop event, cleanup the camera, and allow the rest of the quit process to continue
-		print("on_close")
 		self.stop_event.set()
-		self.vs.stream.release()
-		#self.vs.stop()
+		self.vs.stop()
 		self.root.destroy()
-		self.thread = None
+		self.thread(target=self.video_loop).terminate()
+
+	def do_nothing(self):
+		pass
 
 
 def start_driving(username, contact_name, contact_email):
