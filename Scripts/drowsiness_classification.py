@@ -30,7 +30,7 @@ FRAMES_PER_SECOND = 3  # number of frame per a second the drowsiness classificat
 MINUTES_PER_WINDOW = 5  # approximate number of minutes the frame window contains
 WINDOW_SIZE = 60 * MINUTES_PER_WINDOW * FRAMES_PER_SECOND  # frame window size (60 seconds * minutes * frames)
 
-EYE_ASPECT_RATIO_THRESHOLD = 0.3  # eye aspect ratio threshold
+EYE_ASPECT_RATIO_THRESHOLD = 0.2  # eye aspect ratio threshold
 EMAIL_THRESHOLD = 3  # number of alarms before sending email
 
 
@@ -48,17 +48,20 @@ class DrowsinessDetector:
 		self.root = tk.Tk()
 		self.panel = None
 
-		btn = tk.Button(self.root, text="Stop", command=self.on_close)
-		btn.pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
-
 		# start a thread that constantly pools the video sensor for the most recently read frame
 		self.stop_event = threading.Event()
 		self.thread = threading.Thread(target=self.video_loop, args=())
 		self.thread.start()
 
+		# stop button
+		btn = tk.Button(self.root, text="Stop", command=self.on_close)
+		btn.pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
+
 		# set a callback to handle when the window is closed
-		self.root.wm_title("PyImageSearch PhotoBooth")
+		self.root.wm_title("Driver Drowsiness Detection")
 		self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)
+
+		self.root.resizable(False, False)
 
 	def video_loop(self):
 
@@ -80,6 +83,7 @@ class DrowsinessDetector:
 			frame = self.vs.read()  # grab the frame from the threaded video file stream
 			frame = imutils.resize(frame, width=450)  # resize the frame
 			gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
+			frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 			face = detector(gray_frame, 0)  # detect faces in the grayscale frame - assuming there is only one face
 			if not face:
@@ -116,11 +120,15 @@ class DrowsinessDetector:
 				travel_duration = current_time - start_drive_time
 
 				# compare the counters to thresholds to see if the driver is classified as drowsy - based on blinks OR yawns
-				if blink_counter >= thresholds.blink_count_threshold(current_time, travel_duration) or yawn_counter >= thresholds.yawn_count_threshold(current_time, travel_duration):
+				if blink_counter >= thresholds.blink_count_threshold(current_time, travel_duration) or \
+					yawn_counter >= thresholds.yawn_count_threshold(current_time, travel_duration):
+
+					print(blink_counter, yawn_counter)
 
 					# reset queues and counters to
 					yawn_queue = deque()
-					blink_counter = yawn_counter = 0
+					blink_counter = 0
+					yawn_counter = 0
 
 					# alarm
 					if not alarm_on:  # check if the alarm is not on
@@ -138,7 +146,7 @@ class DrowsinessDetector:
 							email_thread.deamon = True
 							email_thread.start()"""
 
-					cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
+					#cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
 
 				else:  # not classified as drowsy
 					alarm_on = False  # reset the alarm
@@ -147,7 +155,7 @@ class DrowsinessDetector:
 			cv2.drawContours(frame, [cv2.convexHull(shape[36:42])], -1, (0, 255, 0), 1)  # compute convex hull and visualize right eye
 			cv2.drawContours(frame, [shape[48:60]], -1, (0, 255, 0), 1)  # visualize lips
 
-			frame = Image.fromarray(frame)
+			frame = Image.fromarray(frame, mode="RGB")
 			frame = ImageTk.PhotoImage(frame)
 
 			if self.panel is None:  # initialize the panel
@@ -161,9 +169,12 @@ class DrowsinessDetector:
 
 	def on_close(self):
 		# set the stop event, cleanup the camera, and allow the rest of the quit process to continue
+		print("on_close")
 		self.stop_event.set()
-		self.vs.stop()
-		self.root.quit()
+		self.vs.stream.release()
+		#self.vs.stop()
+		self.root.destroy()
+		self.thread = None
 
 
 def start_driving(username, contact_name, contact_email):
@@ -175,3 +186,5 @@ def start_driving(username, contact_name, contact_email):
 	dd = DrowsinessDetector(vs, username, contact_name, contact_email)
 	dd.root.mainloop()
 
+
+start_driving("a", "a", "a")
