@@ -52,18 +52,16 @@ class DrowsinessDetector:
 
         # start a thread that constantly pools the video sensor for the most recently read frame
         self.stop_event = threading.Event()
-        self.thread = threading.Thread(target=self.video_loop, args=(), daemon = True)
+        self.thread = threading.Thread(target=self.video_loop, args=(), daemon=True)
         self.thread.start()
 
         # stop button
-        btn = tk.Button(self.root, text="Stop", command=self.on_close)
-        btn.pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
+        tk.Button(self.root, text="Stop Driving", command=self.on_close, bg="sky blue", font=("times new roman", 12)).\
+            pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
 
         self.root.wm_title("Driver Drowsiness Detection")
         self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)  # set a callback to handle when the window is closed
         self.root.resizable(False, False)
-
-
 
     def video_loop(self):
 
@@ -96,8 +94,7 @@ class DrowsinessDetector:
             shape = predictor(gray_frame, face[0])  # determine the facial landmarks for the face region
             shape = face_utils.shape_to_np(shape)  # convert the facial landmark (x, y)-coordinates to a NumPy array
 
-            if datetime.datetime.now() - last_frame_time >= datetime.timedelta(
-                    seconds=1 / FRAMES_PER_SECOND):  # if a sufficient time passed since the previous frame was analysed
+            if datetime.datetime.now() - last_frame_time >= datetime.timedelta(seconds=1/FRAMES_PER_SECOND):  # if a sufficient time passed since the previous frame was analysed
 
                 # to detect drowsiness, check for a blink and a yawn in the frame:
 
@@ -106,7 +103,6 @@ class DrowsinessDetector:
                 # blink - by computing the eye aspect ratios
                 if blink_score.compute_average_eye_aspect_ratios(shape) < EYE_ASPECT_RATIO_THRESHOLD:
                     blink_counter += 1
-
                 else:
                     blink_counter = 0
 
@@ -147,15 +143,13 @@ class DrowsinessDetector:
 							email_thread.deamon = True
 							email_thread.start()"""
 
-                # cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
+                    # cv2.putText(frame, "DROWSINESS ALERT!", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)  # draw the alarm on the frame
 
                 else:  # not classified as drowsy
                     alarm_on = False  # reset the alarm
 
-            cv2.drawContours(frame, [cv2.convexHull(shape[42:48])], -1, (0, 255, 0),
-                             1)  # compute convex hull and visualize left eye
-            cv2.drawContours(frame, [cv2.convexHull(shape[36:42])], -1, (0, 255, 0),
-                             1)  # compute convex hull and visualize right eye
+            cv2.drawContours(frame, [cv2.convexHull(shape[42:48])], -1, (0, 255, 0), 1)  # compute convex hull and visualize left eye
+            cv2.drawContours(frame, [cv2.convexHull(shape[36:42])], -1, (0, 255, 0), 1)  # compute convex hull and visualize right eye
             cv2.drawContours(frame, [shape[48:60]], -1, (0, 255, 0), 1)  # visualize lips
 
             frame = PIL.Image.fromarray(frame, mode="RGB")
@@ -172,21 +166,10 @@ class DrowsinessDetector:
 
     def on_close(self):
 
-
-        #try:
-            # set the stop event, cleanup the camera, and allow the rest of the quit process to continue
         if self.thread.is_alive():
             self.stop_event.set()
             self.vs.stop()
         self.root.destroy()
-
-
-        #except Exception as exception:
-            #messagebox.showerror("Error", exception)
-
-    #def do_nothing(self):
-    #    pass
-
 
 
 def start_driving(username, contact_name, contact_email):
@@ -199,5 +182,4 @@ def start_driving(username, contact_name, contact_email):
     dd.root.mainloop()
 
 
-
-start_driving("a", "a", "a")  # tmp
+#start_driving("a", "a", "a")  # tmp

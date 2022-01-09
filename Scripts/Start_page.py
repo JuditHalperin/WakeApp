@@ -49,7 +49,7 @@ class Infopage:
         self.txt_email_contact = Entry(info_page, font=("times new roman", 15), bg="lightgray")
         self.txt_email_contact.place(x=35, y=270, width=350, height=25)
 
-        start_button = Button(self.root, command=self.start_function, text="Start", bg="sky blue", font=("times new roman", 12)).place(x=150, y=500, width=100, height=30)
+        start_button = Button(self.root, command=self.start_function, text="Start Driving", bg="sky blue", font=("times new roman", 12)).place(x=150, y=500, width=100, height=30)
 
     def start_function(self):
         """A function that starts the system and checks the correctness of input, in case of missing or incorrect details messagebox will appear"""
