@@ -47,8 +47,12 @@ class DrowsinessDetector:
 
         self.thread = None
         self.stop_event = None
-        self.root = tk.Tk()
         self.panel = None
+
+        self.root = tk.Tk()
+        self.root.title("Driver Drowsiness Detection")
+        self.root.resizable(False, False)
+        self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)  # set a callback to handle when the window is closed
 
         # start a thread that constantly pools the video sensor for the most recently read frame
         self.stop_event = threading.Event()
@@ -56,12 +60,8 @@ class DrowsinessDetector:
         self.thread.start()
 
         # stop button
-        tk.Button(self.root, text="Stop Driving", command=self.on_close, bg="sky blue", font=("times new roman", 12)).\
-            pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
-
-        self.root.wm_title("Driver Drowsiness Detection")
-        self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)  # set a callback to handle when the window is closed
-        self.root.resizable(False, False)
+        tk.Button(self.root, text="Stop Driving", command=self.on_close, bg="sky blue", font=("times new roman", 12)). \
+            pack(side="bottom", expand="yes", padx=10, pady=10)
 
     def video_loop(self):
 

@@ -22,10 +22,12 @@ def check(email):
 class Infopage:
 
     def __init__(self, root):
+
         self.root = root
         self.root.title("Info page")
         self.root.geometry("920x600+100+50")
         self.root.resizable(False, False)
+
         # ====BG IMage====
         self.bg = PhotoImage(file="../Data/Driver_Monitoring_Driver_Asleep.png")
         self.bg_image = Label(self.root, image=self.bg).place(x=1, y=0, relheight=1)
@@ -36,6 +38,7 @@ class Infopage:
 
         title = Label(info_page, text="Enter details here", font=("Arial", 25, "bold"), fg="sky blue", bg="white").place(x=60, y=20)
         desc = Label(info_page, text="Driver Drowsiness Detection System", font=("Goudy pld style", 13, "bold"), fg="sky blue", bg="white").place(x=55, y=70)
+
         # ======labels and txt box=====
         lbl_driver_name = Label(info_page, text="Name driver", font=("Goudy pld style", 15, "bold"), fg="gray", bg="white").place(x=30, y=115)
         self.txt_driver_name = Entry(info_page, font=("times new roman", 15), bg="lightgray")
