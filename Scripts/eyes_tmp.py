@@ -25,7 +25,7 @@ ALARM_ON = False  # boolean variable indicating whether the alarm is on or off
 
 WORKING_DIRECTORY = os.getcwd().replace("\\", "/").replace("Scripts", "")  # path to working directory
 SHAPE_PREDICTOR = WORKING_DIRECTORY + "Data/shape_predictor_68_face_landmarks.dat"  # path to facial landmark predictor
-ALARM = WORKING_DIRECTORY + "Data/big_warning.wav"  # path alarm .WAV file
+ALARM = WORKING_DIRECTORY + "Data/alarm.wav"  # path alarm .WAV file
 WEBCAM = 0  # index of webcam on system
 
 

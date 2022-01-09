@@ -10,7 +10,7 @@ import ssl
 
 def sound_alarm():
     """The function plays an alarm sound"""
-    playsound("../Data/big_warning.wav")
+    playsound("../Data/alarm.wav")
 
 
 def send_email(username, contact_name, contact_email):

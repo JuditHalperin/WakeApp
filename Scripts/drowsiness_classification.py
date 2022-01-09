@@ -77,7 +77,7 @@ class DrowsinessDetector:
 
 		while not self.stop_event.is_set():
 
-			frame = vs.read()  # grab the frame from the threaded video file stream
+			frame = self.vs.read()  # grab the frame from the threaded video file stream
 			frame = imutils.resize(frame, width=450)  # resize the frame
 			gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # convert to grayscale channels
 
@@ -166,9 +166,12 @@ class DrowsinessDetector:
 		self.root.quit()
 
 
-vs = VideoStream(src=0).start()  # start the video stream thread, 0 indicates index of webcam on system
-time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
+def start_driving(username, contact_name, contact_email):
+	"""Start the video stream and the drowsiness detection loop"""
+	vs = VideoStream(src=0).start()  # start the video stream thread, 0 indicates index of webcam on system
+	time.sleep(1.0)  # pause for a second to allow the camera sensor to warm up
 
-# start the app
-dd = DrowsinessDetector(vs, "", "", "")
-dd.root.mainloop()
+	# start the app
+	dd = DrowsinessDetector(vs, username, contact_name, contact_email)
+	dd.root.mainloop()
+

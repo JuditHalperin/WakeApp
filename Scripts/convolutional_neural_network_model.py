@@ -25,7 +25,7 @@ validation_set = validation_data_generator.flow_from_directory(validation_data_p
 model = Sequential()
 
 # The activation function decides whether a neuron should be activated or not, by calculating weighted sum and further adding bias with it
-# Max-Pooling is used to reduce the spatial dimensions of an output volume
+# Max-Pooling is used to reduce the spatial dimensions of an model_output.txt volume
 
 # the first layer (input): learning 32 filters
 model.add(Conv2D(32, (3, 3), padding='same', input_shape=(256, 256, 1), activation='relu'))

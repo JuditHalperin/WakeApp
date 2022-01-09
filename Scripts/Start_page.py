@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 import re
 
+import drowsiness_classification
+
 # Make a regular expression,for validating an Email
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
@@ -68,8 +70,13 @@ class Infopage:
             messagebox.showinfo("Enter details completed",
                                 f"{self.txt_driver_name.get()} drive carefully!\nYour contact:{self.txt_name_contact.get()}",
                                 parent=self.root)
+            username, contact_name, contact_email = self.txt_driver_name.get(), self.txt_name_contact.get(), self.txt_email_contact.get()
+            self.root.destroy()
+            drowsiness_classification.start_driving(username, contact_name, contact_email)
 
 
 root = Tk()
 obj = Infopage(root)
 root.mainloop()
+
+
