@@ -26,7 +26,7 @@ FRAMES_PER_SECOND = 3  # number of frame per a second the drowsiness classificat
 MINUTES_PER_WINDOW = 5  # approximate number of minutes the frame window contains
 WINDOW_SIZE = 60 * MINUTES_PER_WINDOW * FRAMES_PER_SECOND  # frame window size (60 seconds * minutes * frames)
 
-EYE_ASPECT_RATIO_THRESHOLD = 0.3  # eye aspect ratio threshold
+EYE_ASPECT_RATIO_THRESHOLD = 0.2  # eye aspect ratio threshold
 EMAIL_THRESHOLD = 3  # number of alarms before sending email
 
 

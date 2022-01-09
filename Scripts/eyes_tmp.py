@@ -18,7 +18,7 @@ import os
 from datetime import datetime
 
 
-EYE_AR_THRESH = 0.3  # eye aspect ratio threshold
+EYE_AR_THRESH = 0.2  # eye aspect ratio threshold
 EYE_AR_CONSEC_FRAMES = 48  # number of frames ratio
 COUNTER = 0  # consecutive frames where the eye aspect ratio is below threshold
 ALARM_ON = False  # boolean variable indicating whether the alarm is on or off

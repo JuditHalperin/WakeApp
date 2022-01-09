@@ -4,6 +4,8 @@
 
 # import packages
 from __future__ import print_function
+
+import PIL
 from imutils.video import VideoStream
 from keras.models import load_model
 from imutils import face_utils
@@ -18,6 +20,7 @@ import imutils
 import time
 import dlib
 import cv2
+from tkinter import *
 
 # import scripts
 import blink_score
@@ -49,7 +52,7 @@ class DrowsinessDetector:
 
         # start a thread that constantly pools the video sensor for the most recently read frame
         self.stop_event = threading.Event()
-        self.thread = threading.Thread(target=self.video_loop, args=())
+        self.thread = threading.Thread(target=self.video_loop, args=(), daemon = True)
         self.thread.start()
 
         # stop button
@@ -57,8 +60,10 @@ class DrowsinessDetector:
         btn.pack(side="bottom", fill="both", expand="yes", padx=10, pady=10)
 
         self.root.wm_title("Driver Drowsiness Detection")
-        self.root.wm_protocol("WM_DELETE_WINDOW", self.do_nothing)  # set a callback to handle when the window is closed
+        self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)  # set a callback to handle when the window is closed
         self.root.resizable(False, False)
+
+
 
     def video_loop(self):
 
@@ -153,7 +158,7 @@ class DrowsinessDetector:
                              1)  # compute convex hull and visualize right eye
             cv2.drawContours(frame, [shape[48:60]], -1, (0, 255, 0), 1)  # visualize lips
 
-            frame = Image.fromarray(frame, mode="RGB")
+            frame = PIL.Image.fromarray(frame, mode="RGB")
             frame = ImageTk.PhotoImage(frame)
 
             if self.panel is None:  # initialize the panel
@@ -167,17 +172,21 @@ class DrowsinessDetector:
 
     def on_close(self):
 
-        try:
+
+        #try:
             # set the stop event, cleanup the camera, and allow the rest of the quit process to continue
+        if self.thread.is_alive():
             self.stop_event.set()
             self.vs.stop()
-            self.root.destroy()
+        self.root.destroy()
 
-        except Exception as exception:
-            messagebox.showerror("Error", exception)
 
-    def do_nothing(self):
-        pass
+        #except Exception as exception:
+            #messagebox.showerror("Error", exception)
+
+    #def do_nothing(self):
+    #    pass
+
 
 
 def start_driving(username, contact_name, contact_email):
@@ -188,6 +197,7 @@ def start_driving(username, contact_name, contact_email):
     # start the app
     dd = DrowsinessDetector(vs, username, contact_name, contact_email)
     dd.root.mainloop()
+
 
 
 start_driving("a", "a", "a")  # tmp
