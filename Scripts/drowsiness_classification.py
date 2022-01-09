@@ -1,14 +1,13 @@
+
 # Drowsiness detector algorithm - based on blinks, yawns, travel duration and time
 
 
 # import packages
 from __future__ import print_function
-
-from tkinter import messagebox
-
 from imutils.video import VideoStream
 from keras.models import load_model
 from imutils import face_utils
+from tkinter import messagebox
 from collections import deque
 from PIL import ImageTk
 from PIL import Image
@@ -26,10 +25,10 @@ import yawn_score
 import thresholds
 import drowsiness_alert
 
+# constants and thresholds
 FRAMES_PER_SECOND = 3  # number of frame per a second the drowsiness classification is based on
 MINUTES_PER_WINDOW = 5  # approximate number of minutes the frame window contains
 WINDOW_SIZE = 60 * MINUTES_PER_WINDOW * FRAMES_PER_SECOND  # frame window size (60 seconds * minutes * frames)
-
 EYE_ASPECT_RATIO_THRESHOLD = 0.2  # eye aspect ratio threshold
 EMAIL_THRESHOLD = 3  # number of alarms before sending email
 
@@ -191,4 +190,4 @@ def start_driving(username, contact_name, contact_email):
     dd.root.mainloop()
 
 
-start_driving("a", "a", "a")
+start_driving("a", "a", "a")  # tmp
