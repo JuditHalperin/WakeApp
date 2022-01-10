@@ -3,6 +3,7 @@
 # All the values are based on experiments
 
 
+# constants
 FRAMES_PER_SECOND = 3  # number of frame per a second the drowsiness classification is based on
 YAWN_DURATION = 7  # humans yawn for an average length of 7 seconds
 
