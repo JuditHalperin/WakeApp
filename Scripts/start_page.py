@@ -43,7 +43,7 @@ class InfoPage:
 
         # title and description
         Label(info_page, text="User Details", font=("Goudy pld style", 25, "bold"), fg="#085768", bg="white").place(x=30, y=20)
-        Label(info_page, text="Note that your contact will receive an email \n in case of a repeated drowsiness detection.", font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=80)
+        Label(info_page, text="Note that your contact will receive an email \n in case of a repeating drowsiness detection.", font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=80)
 
         # driver name label and text box
         Label(info_page, text="Driver name", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(x=30, y=140)
