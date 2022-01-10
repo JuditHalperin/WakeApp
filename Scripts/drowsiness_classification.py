@@ -1,5 +1,6 @@
 
 # Drowsiness detector algorithm - based on blinks, yawns, travel duration and time
+# GUI second page
 
 
 # import packages

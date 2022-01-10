@@ -1,4 +1,8 @@
 
+# Driver and emergency contact details before starting driving
+# GUI first page
+
+
 # import packages
 from tkinter import *
 from tkinter import messagebox
@@ -7,13 +11,13 @@ import re
 # import scripts
 import drowsiness_classification
 
-# Make a regular expression, for validating an Email
-regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+# a regular expression for validating an email
+REGEX = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 
 def check(email):
     """A function for validating an Email"""
-    if re.fullmatch(regex, email):
+    if re.fullmatch(REGEX, email):
         return 0  # in case the email is valid
     else:
         return 1  # in case the email is invalid
@@ -24,9 +28,9 @@ class Infopage:
     def __init__(self, root):
 
         self.root = root
-        self.root.title("Info page")
+        self.root.title("Driver Drowsiness Detection")
         self.root.geometry("920x600+100+50")
-        self.root.resizable(False, False)
+        self.root.resizable(False, False)  # disable resizing
 
         # ====BG IMage====
         self.bg = PhotoImage(file="../Data/Driver_Monitoring_Driver_Asleep.png")
