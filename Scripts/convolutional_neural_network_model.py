@@ -1,5 +1,5 @@
 
-# This script builds a neural network model for the yawn classification
+# Neural network model for the yawn classification
 
 
 # import packages

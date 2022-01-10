@@ -1,22 +1,4 @@
-C:\Networks\miniconda3\python.exe C:/Users/ortal/source/repos/DriverDrowsinessDetection/Scripts/convolutional_neural_network_model.py
-2022-01-02 13:43:03.254548: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'cudart64_110.dll'; dlerror: cudart64_110.dll not found
-2022-01-02 13:43:03.255166: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
-Found 1018 images belonging to 2 classes.
-Found 215 images belonging to 2 classes.
-2022-01-02 13:43:08.759950: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'nvcuda.dll'; dlerror: nvcuda.dll not found
-2022-01-02 13:43:08.760588: W tensorflow/stream_executor/cuda/cuda_driver.cc:269] failed call to cuInit: UNKNOWN ERROR (303)
-2022-01-02 13:43:08.772332: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: DESKTOP-VN2PLG0
-2022-01-02 13:43:08.773337: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: DESKTOP-VN2PLG0
-2022-01-02 13:43:08.775369: I tensorflow/core/platform/cpu_feature_guard.cc:151] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX AVX2
-To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-C:/Users/ortal/source/repos/DriverDrowsinessDetection/Scripts/convolutional_neural_network_model.py:73: UserWarning: `Model.fit_generator` is deprecated and will be removed in a future version. Please use `Model.fit`, which supports generators.
-  history = model.fit_generator(train_set, epochs=num_epochs , validation_data=validation_set, callbacks=callbacks_list)
 Epoch 1/50
-2022-01-02 13:43:10.795546: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 1023410176 exceeds 10% of free system memory.
-2022-01-02 13:43:11.161702: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
-2022-01-02 13:43:11.330495: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 511705088 exceeds 10% of free system memory.
-2022-01-02 13:43:12.501067: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
-2022-01-02 13:43:14.196514: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 255852544 exceeds 10% of free system memory.
 8/8 [==============================] - ETA: 0s - loss: 1.0784 - accuracy: 0.5098
 Epoch 00001: val_accuracy improved from -inf to 0.65581, saving model to ../Data/Model\yawn_detection.h5
 8/8 [==============================] - 79s 9s/step - loss: 1.0784 - accuracy: 0.5098 - val_loss: 0.6843 - val_accuracy: 0.6558
@@ -216,5 +198,3 @@ Epoch 50/50
 8/8 [==============================] - ETA: 0s - loss: 0.1163 - accuracy: 0.9509
 Epoch 00050: val_accuracy did not improve from 0.94884
 8/8 [==============================] - 60s 7s/step - loss: 0.1163 - accuracy: 0.9509 - val_loss: 0.2158 - val_accuracy: 0.9302
-
-Process finished with exit code 0
