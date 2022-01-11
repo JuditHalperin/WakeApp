@@ -11,15 +11,13 @@ import re
 # import scripts
 import drowsiness_classification
 
-# a regular expression for validating an email
+# regular expression for validating an email
 REGEX = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 
-def check_email(email):
+def is_valid_email(email):
     """This function checks if the email address is valid"""
-    if re.fullmatch(REGEX, email):
-        return 0  # in case the email is valid
-    return 1  # in case the email is invalid
+    return re.fullmatch(REGEX, email)
 
 
 class InfoPage:
@@ -34,8 +32,8 @@ class InfoPage:
         self.root.resizable(False, False)  # disable resizing
 
         # background image
-        self.bg = PhotoImage(file="../Data/background.png")
-        self.bg_image = Label(self.root, image=self.bg).place(x=300, y=0)
+        self.background = PhotoImage(file="../Data/background.png")
+        Label(self.root, image=self.background).place(x=300, y=0)
 
         # info page frame
         info_page = Frame(self.root, bg="white")
@@ -71,12 +69,12 @@ class InfoPage:
             messagebox.showerror("Error", "All fields are required.", parent=self.root)
 
         # if the email address is invalid, show an error message
-        elif check_email(self.txt_email_contact.get()) == 1:
+        elif not is_valid_email(self.txt_email_contact.get()):
             messagebox.showerror("Error", "Invalid email address.", parent=self.root)
 
         # otherwise, show a success message, close the window and start driving
         else:
-            messagebox.showinfo("Start Driving", f"{self.txt_driver_name.get()}, have a pleasant journey!\nYour emergency contact is {self.txt_name_contact.get()}.", parent=self.root)
+            messagebox.showinfo("Start Driving", f"{self.txt_driver_name.get()}, have a pleasant journey! \nYour emergency contact is {self.txt_name_contact.get()}. \n\nPlease wait a few seconds...", parent=self.root)
             username, contact_name, contact_email = self.txt_driver_name.get(), self.txt_name_contact.get(), self.txt_email_contact.get()  # these will be deleted when the root is destroyed
             self.root.destroy()
             drowsiness_classification.start_driving(username, contact_name, contact_email)
