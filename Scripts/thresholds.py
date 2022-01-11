@@ -11,7 +11,7 @@ YAWN_DURATION = 7  # humans yawn for an average length of 7 seconds
 def blink_count_threshold(current_time, travel_duration):
     """
     This function returns the threshold of the blink count, based on time (datetime) and travel duration (timedelta)
-    It defines a basic threshold, and then decreases one frame if it is a nighttime or the travel is too long
+    It defines a basic threshold, and then decreases one frame if it is nighttime or the travel is too long
     """
     threshold = FRAMES_PER_SECOND * (10 / 3)  # basic threshold (seconds per frame * seconds of blink)
     if current_time.hour >= 22 or current_time.hour <= 5:  # the threshold is lower if the time is 22:00 - 05:00
@@ -24,7 +24,7 @@ def blink_count_threshold(current_time, travel_duration):
 def yawn_count_threshold(current_time, travel_duration):
     """
     This function returns the threshold of the blink count, based on time (datetime) and travel duration (timedelta)
-    It defines a basic threshold, and then decreases a single yawn if it is a nighttime or the travel is too long
+    It defines a basic threshold, and then decreases a single yawn if it is nighttime or the travel is too long
     """
     threshold = FRAMES_PER_SECOND * YAWN_DURATION * 3  # basic threshold (seconds per frame * seconds of single yawn * number of yawns)
     if current_time.hour >= 22 or current_time.hour <= 5:  # the threshold is lower if the time is 22:00 - 05:00
