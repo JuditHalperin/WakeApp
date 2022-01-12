@@ -41,7 +41,7 @@ class InfoPage:
         Label(self.root, image=self.background).place(x=300, y=0)
 
         # info page frame
-        info_page = Frame(self.root, bg="white")
+        info_page = Frame(root, bg="white")
         info_page.place(x=0, y=0, height=920, width=400)
 
         frame = Frame(info_page, width=100, height=200)
@@ -49,12 +49,13 @@ class InfoPage:
         frame.place(anchor='se', relx=0.75, rely=0.12)
 
         # Create an object of tkinter ImageTk
-        img = ImageTk.PhotoImage(Image.open("../Data/slogo.png"))
+        img = ImageTk.PhotoImage(Image.open("../Data/logo_img.png"))
 
         # Create a Label Widget to display the text or Image
         label = Label(frame, image=img, background="white")
         label.pack()
-        label.grid(row=60, column=40)
+
+
         Label(info_page,
               text="Note that your contact will receive an email \n in case of a repeating drowsiness detection.",
               font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=80)
@@ -80,7 +81,7 @@ class InfoPage:
         # start button
         Button(self.root, command=self.start_function, text="Start Driving", bg="#ABCAD5",
                font=("times new roman", 12)).place(x=150, y=346, width=100, height=30)
-
+        root.mainloop()
     def start_function(self):
         """This function checks the correctness of the input and starts the system, in case of missing or incorrect details messagebox will appear"""
 
@@ -105,7 +106,7 @@ class InfoPage:
 def main():
     root = Tk()
     InfoPage(root)
-    root.mainloop()  # infinite loop waiting for an event to occur and process the event as long as the window is not closed
+    #root.mainloop()  # infinite loop waiting for an event to occur and process the event as long as the window is not closed
 
 
 if __name__ == '__main__':
