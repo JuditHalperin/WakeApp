@@ -1,3 +1,4 @@
+
 # GUI first page
 # Driver and emergency contact details before starting driving
 
@@ -33,15 +34,15 @@ class InfoPage:
         self.root.resizable(False, False)  # disable resizing
 
         # background image
-        self.background = PhotoImage(file="../Data/background.png")
-        Label(self.root, image=self.background).place(x=300, y=0)
+        background = PhotoImage(file="../Data/background.png")
+        Label(self.root, image=background).place(x=300, y=0)
 
         # info page frame
         info_page = Frame(root, bg="white")
         info_page.place(x=0, y=0, height=920, width=400)
 
         # logo
-        logo_frame = Frame(info_page, width=100, height=200)
+        logo_frame = Frame(info_page, width=100, height=200)  # create a frame to place the logo on
         logo_frame.place(anchor='se', relx=0.75, rely=0.12)
         logo_image = ImageTk.PhotoImage(Image.open("../Data/logo_img.png"))  # create an ImageTk object
         Label(logo_frame, image=logo_image, background="white").pack()  # create a label widget to display the image
