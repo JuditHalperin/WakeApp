@@ -5,15 +5,11 @@
 # import packages
 from tkinter import *
 from tkinter import messagebox
+from PIL import ImageTk
+from PIL import Image
 import re
-import tkinter as tk
-from PIL import ImageTk, Image
-# import tk
-
 
 # import scripts
-from PIL import ImageTk
-
 import drowsiness_classification
 
 # regular expression for validating an email
@@ -44,44 +40,37 @@ class InfoPage:
         info_page = Frame(root, bg="white")
         info_page.place(x=0, y=0, height=920, width=400)
 
-        frame = Frame(info_page, width=100, height=200)
-        frame.pack()
-        frame.place(anchor='se', relx=0.75, rely=0.12)
+        # logo
+        logo_frame = Frame(info_page, width=100, height=200)
+        #frame.pack()
+        logo_frame.place(anchor='se', relx=0.75, rely=0.12)
+        logo_image = ImageTk.PhotoImage(Image.open("../Data/logo_img.png"))  # create an ImageTk object
+        Label(logo_frame, image=logo_image, background="white").pack()  # create a label widget to display the image
 
-        # Create an object of tkinter ImageTk
-        img = ImageTk.PhotoImage(Image.open("../Data/logo_img.png"))
-
-        # Create a Label Widget to display the text or Image
-        label = Label(frame, image=img, background="white")
-        label.pack()
-
-
-        Label(info_page,
-              text="Note that your contact will receive an email \n in case of a repeating drowsiness detection.",
-              font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=80)
+        # note label
+        Label(info_page, text="Note that your contact will receive an email \n in case of a repeating drowsiness detection.", font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=90)
 
         # driver name label and text box
-        Label(info_page, text="Driver name", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(x=30,
-                                                                                                                   y=140)
+        Label(info_page, text="Driver name", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(x=30, y=150)
         self.txt_driver_name = Entry(info_page, font=("times new roman", 15), bg="lightgray")
-        self.txt_driver_name.place(x=35, y=170, width=350, height=25)
+        self.txt_driver_name.place(x=35, y=180, width=350, height=25)
 
         # contact name label and text box
-        Label(info_page, text="Contact name", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(
-            x=30, y=200)
+        Label(info_page, text="Contact name", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(x=30, y=210)
         self.txt_name_contact = Entry(info_page, font=("times new roman", 15), bg="lightgray")
-        self.txt_name_contact.place(x=35, y=230, width=350, height=25)
+        self.txt_name_contact.place(x=35, y=240, width=350, height=25)
 
         # contact email label and text box
-        Label(info_page, text="Contact email", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(
-            x=30, y=260)
+        Label(info_page, text="Contact email", font=("Goudy pld style", 12, "bold"), fg="#B80008", bg="white").place(x=30, y=270)
         self.txt_email_contact = Entry(info_page, font=("times new roman", 15), bg="lightgray")
-        self.txt_email_contact.place(x=35, y=290, width=350, height=25)
+        self.txt_email_contact.place(x=35, y=300, width=350, height=25)
 
         # start button
-        Button(self.root, command=self.start_function, text="Start Driving", bg="#ABCAD5",
-               font=("times new roman", 12)).place(x=150, y=346, width=100, height=30)
+        Button(self.root, command=self.start_function, text="Start Driving", bg="#ABCAD5", font=("times new roman", 12)).place(x=150, y=350, width=100, height=30)
+
+        # infinite loop waiting for an event to occur and process the event as long as the window is not closed
         root.mainloop()
+
     def start_function(self):
         """This function checks the correctness of the input and starts the system, in case of missing or incorrect details messagebox will appear"""
 
@@ -95,18 +84,14 @@ class InfoPage:
 
         # otherwise, show a success message, close the window and start driving
         else:
-            messagebox.showinfo("Start Driving",
-                                f"{self.txt_driver_name.get()}, have a pleasant journey! \nYour emergency contact is {self.txt_name_contact.get()}. \n\nPlease wait a few seconds...",
-                                parent=self.root)
+            messagebox.showinfo("Start Driving", f"{self.txt_driver_name.get()}, have a pleasant journey! \nYour emergency contact is {self.txt_name_contact.get()}. \n\nPlease wait a few seconds...", parent=self.root)
             username, contact_name, contact_email = self.txt_driver_name.get(), self.txt_name_contact.get(), self.txt_email_contact.get()  # these will be deleted when the root is destroyed
             self.root.destroy()
             drowsiness_classification.start_driving(username, contact_name, contact_email)
 
 
 def main():
-    root = Tk()
-    InfoPage(root)
-    #root.mainloop()  # infinite loop waiting for an event to occur and process the event as long as the window is not closed
+    InfoPage(Tk())
 
 
 if __name__ == '__main__':
