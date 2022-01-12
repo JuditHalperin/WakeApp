@@ -27,7 +27,7 @@ class InfoPage:
 
         # root
         self.root = root
-        self.root.title("Driver Drowsiness Detection")
+        self.root.title("WakeApp")
         self.root.geometry("800x420+100+50")
         self.root.resizable(False, False)  # disable resizing
 

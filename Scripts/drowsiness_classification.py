@@ -50,7 +50,7 @@ class DrowsinessDetector:
 
         # initialize the tkinter object
         self.root = tk.Tk()
-        self.root.title("Driver Drowsiness Detection")
+        self.root.title("WakeApp")
         self.root.resizable(False, False)  # disable resizing
         self.root.wm_protocol("WM_DELETE_WINDOW", self.on_close)  # set a callback to handle when the window is closed by the X button
 
