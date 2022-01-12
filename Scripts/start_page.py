@@ -42,7 +42,6 @@ class InfoPage:
 
         # logo
         logo_frame = Frame(info_page, width=100, height=200)
-        #frame.pack()
         logo_frame.place(anchor='se', relx=0.75, rely=0.12)
         logo_image = ImageTk.PhotoImage(Image.open("../Data/logo_img.png"))  # create an ImageTk object
         Label(logo_frame, image=logo_image, background="white").pack()  # create a label widget to display the image
