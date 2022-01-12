@@ -55,7 +55,6 @@ class InfoPage:
         label = Label(frame, image=img, background="white")
         label.pack()
         label.grid(row=60, column=40)
-
         Label(info_page,
               text="Note that your contact will receive an email \n in case of a repeating drowsiness detection.",
               font=("Goudy pld style", 13), fg="#619BAF", bg="white").place(x=30, y=80)
